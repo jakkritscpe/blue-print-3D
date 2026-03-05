@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { 
-  Box, 
-  CheckCircle, 
+import {
+  Box,
+  CheckCircle,
   Clock,
   Home,
   DollarSign,
@@ -29,21 +29,21 @@ const StepProgress = ({ currentStep }: { currentStep: number }) => {
   ];
 
   return (
-    <div className="flex items-center">
-      <div className="flex items-center gap-2">
+    <div className="flex items-center justify-center">
+      <div className="flex items-center gap-2 sm:gap-4">
         {steps.map((s, index) => (
           <div key={s.step} className="flex items-center">
             <div className={`flex flex-col items-center ${s.step === currentStep ? 'text-stone-900' : s.step < currentStep ? 'text-stone-600' : 'text-stone-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold ${
-                s.step === currentStep ? 'bg-stone-800 text-white' : 
-                s.step < currentStep ? 'bg-stone-600 text-white' : 
-                'bg-stone-200 text-stone-500'
-              }`}>
-                {s.step < currentStep ? <Check className="w-4 h-4" /> : s.step}
+              <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-semibold ${s.step === currentStep ? 'bg-stone-800 text-white' :
+                  s.step < currentStep ? 'bg-stone-600 text-white' :
+                    'bg-stone-200 text-stone-500'
+                }`}>
+                {s.step < currentStep ? <Check className="w-4 h-4 sm:w-5 sm:h-5" /> : s.step}
               </div>
+              <span className="text-[10px] sm:text-xs mt-1 sm:mt-2 font-medium">{s.label}</span>
             </div>
             {index < steps.length - 1 && (
-              <div className={`w-8 h-0.5 mx-2 ${s.step < currentStep ? 'bg-stone-600' : 'bg-stone-200'}`} />
+              <div className={`w-8 sm:w-16 h-0.5 mx-2 sm:mx-4 ${s.step < currentStep ? 'bg-stone-600' : 'bg-stone-200'}`} />
             )}
           </div>
         ))}
@@ -121,7 +121,7 @@ export default function DonePage() {
                 <br />
                 ทีมงานจะตรวจสอบแบบและส่งใบเสนอราคาอย่างละเอียดให้คุณ
               </p>
-              
+
               <div className="flex items-center justify-center gap-2 mb-8">
                 <Badge variant="outline" className="border-amber-200 text-amber-700 bg-amber-50 px-4 py-2">
                   <Clock className="w-4 h-4 mr-2" />
@@ -134,8 +134,8 @@ export default function DonePage() {
                 <p className="text-sm text-stone-600 mb-2">เลขอ้างอิงโปรเจกต์</p>
                 <div className="flex items-center justify-center gap-3">
                   <span className="text-2xl font-mono font-bold text-stone-900">{projectRef}</span>
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     size="icon"
                     className="h-8 w-8"
                     onClick={() => copyToClipboard(projectRef)}
@@ -244,17 +244,17 @@ export default function DonePage() {
 
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/dashboard">
-              <Button variant="outline" className="border-stone-300 w-full sm:w-auto">
+            <Link href="/dashboard" className="w-full sm:w-auto">
+              <Button variant="outline" className="border-stone-300 w-full">
                 <Home className="w-4 h-4 mr-2" />
                 กลับไปที่แดชบอร์ด
               </Button>
             </Link>
-            <Button variant="outline" className="border-stone-300">
+            <Button variant="outline" className="border-stone-300 w-full sm:w-auto">
               <Download className="w-4 h-4 mr-2" />
               ดาวน์โหลดใบเสนอราคา
             </Button>
-            <Button variant="outline" className="border-stone-300">
+            <Button variant="outline" className="border-stone-300 w-full sm:w-auto">
               <Share2 className="w-4 h-4 mr-2" />
               แชร์โปรเจกต์
             </Button>

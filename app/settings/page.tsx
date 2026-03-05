@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -11,11 +11,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { 
-  Box, 
-  Home, 
-  Settings, 
-  LogOut, 
+import {
+  Box,
+  Home,
+  Settings,
+  LogOut,
   User,
   Mail,
   Phone,
@@ -24,13 +24,16 @@ import {
   Save,
   ChevronLeft,
   Eye,
-  EyeOff
+  EyeOff,
+  Menu,
+  X
 } from 'lucide-react';
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState('profile');
   const [showPassword, setShowPassword] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const [profileData, setProfileData] = useState({
     name: 'John Doe',
@@ -58,20 +61,41 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-stone-50 flex">
+      {/* Mobile Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 z-40 md:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-stone-200 fixed h-full z-10">
-        <div className="p-6">
+      <aside className={`bg-white border-r border-stone-200 fixed h-full z-50 w-64 flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className="p-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Box className="w-8 h-8 text-stone-800" />
             <span className="text-xl font-semibold text-stone-800">BluePrint3D</span>
           </Link>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <X className="w-5 h-5" />
+          </Button>
         </div>
 
         <ScrollArea className="flex-1 px-4">
           <nav className="space-y-1">
             <Link href="/dashboard">
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 className="w-full justify-start gap-3"
               >
                 <Home className="w-5 h-5" />
@@ -79,7 +103,7 @@ export default function SettingsPage() {
               </Button>
             </Link>
             <Link href="/settings">
-              <Button 
+              <Button
                 variant="secondary"
                 className="w-full justify-start gap-3"
               >
@@ -106,24 +130,32 @@ export default function SettingsPage() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 ml-64">
+      <main className="flex-1 w-full md:ml-64 flex flex-col min-h-screen">
         {/* Header */}
-        <header className="bg-white border-b border-stone-200 sticky top-0 z-10">
-          <div className="flex items-center gap-4 px-8 py-4">
-            <Link href="/dashboard">
+        <header className="bg-white border-b border-stone-200 sticky top-0 z-30">
+          <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-8 py-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden -ml-2"
+              onClick={() => setIsMobileMenuOpen(true)}
+            >
+              <Menu className="w-6 h-6 text-stone-800" />
+            </Button>
+            <Link href="/dashboard" className="hidden sm:block">
               <Button variant="ghost" size="icon">
                 <ChevronLeft className="w-5 h-5" />
               </Button>
             </Link>
             <div>
-              <h1 className="text-2xl font-bold text-stone-900">ตั้งค่าบัญชี</h1>
-              <p className="text-sm text-stone-600">จัดการข้อมูลส่วนตัวและการตั้งค่าความปลอดภัย</p>
+              <h1 className="text-xl sm:text-2xl font-bold text-stone-900">ตั้งค่าบัญชี</h1>
+              <p className="text-xs sm:text-sm text-stone-600 hidden sm:block">จัดการข้อมูลส่วนตัวและการตั้งค่าความปลอดภัย</p>
             </div>
           </div>
         </header>
 
         {/* Content */}
-        <div className="p-8">
+        <div className="p-4 sm:p-8 flex-1">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -148,14 +180,14 @@ export default function SettingsPage() {
                   </CardHeader>
                   <CardContent className="space-y-6">
                     {/* Avatar Section */}
-                    <div className="flex items-center gap-6">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
                       <div className="relative">
                         <Avatar className="w-24 h-24">
                           <AvatarImage src="/images/avatar/user.jpg" />
                           <AvatarFallback className="bg-stone-200 text-stone-700 text-2xl">JD</AvatarFallback>
                         </Avatar>
-                        <Button 
-                          size="icon" 
+                        <Button
+                          size="icon"
                           className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700"
                         >
                           <Camera className="w-4 h-4" />
@@ -239,7 +271,7 @@ export default function SettingsPage() {
 
                     <div className="flex justify-end gap-3 pt-4">
                       <Button variant="outline">ยกเลิก</Button>
-                      <Button 
+                      <Button
                         onClick={handleSaveProfile}
                         className={saved ? 'bg-green-600 hover:bg-green-700' : 'bg-stone-800 hover:bg-stone-700'}
                       >
@@ -310,7 +342,7 @@ export default function SettingsPage() {
 
                     <div className="flex justify-end gap-3 pt-4">
                       <Button variant="outline">ยกเลิก</Button>
-                      <Button 
+                      <Button
                         onClick={handleSavePassword}
                         className={saved ? 'bg-green-600 hover:bg-green-700' : 'bg-stone-800 hover:bg-stone-700'}
                       >

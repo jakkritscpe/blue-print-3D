@@ -16,12 +16,12 @@ export default function LoginPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const [loginData, setLoginData] = useState({
     email: '',
     password: ''
   });
-  
+
   const [registerData, setRegisterData] = useState({
     name: '',
     email: '',
@@ -92,7 +92,7 @@ export default function LoginPage() {
                         placeholder="name@example.com"
                         value={loginData.email}
                         onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
-                        className="border-stone-300 focus:border-stone-500"
+                        className="border-stone-300 focus:border-stone-500 h-11 sm:h-10"
                         required
                       />
                     </div>
@@ -105,7 +105,7 @@ export default function LoginPage() {
                           placeholder="••••••••"
                           value={loginData.password}
                           onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                          className="border-stone-300 focus:border-stone-500 pr-10"
+                          className="border-stone-300 focus:border-stone-500 pr-10 h-11 sm:h-10"
                           required
                         />
                         <button
@@ -126,9 +126,9 @@ export default function LoginPage() {
                         ลืมรหัสผ่าน?
                       </Link>
                     </div>
-                    <Button 
-                      type="submit" 
-                      className="w-full bg-stone-800 hover:bg-stone-700 text-white"
+                    <Button
+                      type="submit"
+                      className="w-full bg-stone-800 hover:bg-stone-700 text-white h-11 sm:h-10"
                       disabled={isLoading}
                     >
                       {isLoading ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
@@ -145,11 +145,11 @@ export default function LoginPage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
-                    <Button variant="outline" className="border-stone-300">
+                    <Button variant="outline" className="border-stone-300 h-11 sm:h-10">
                       <Mail className="w-4 h-4 mr-2" />
                       Google
                     </Button>
-                    <Button variant="outline" className="border-stone-300">
+                    <Button variant="outline" className="border-stone-300 h-11 sm:h-10">
                       <Github className="w-4 h-4 mr-2" />
                       GitHub
                     </Button>
@@ -185,7 +185,7 @@ export default function LoginPage() {
                         placeholder="ชื่อ นามสกุล"
                         value={registerData.name}
                         onChange={(e) => setRegisterData({ ...registerData, name: e.target.value })}
-                        className="border-stone-300 focus:border-stone-500"
+                        className="border-stone-300 focus:border-stone-500 h-11 sm:h-10"
                         required
                       />
                     </div>
@@ -197,7 +197,7 @@ export default function LoginPage() {
                         placeholder="name@example.com"
                         value={registerData.email}
                         onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
-                        className="border-stone-300 focus:border-stone-500"
+                        className="border-stone-300 focus:border-stone-500 h-11 sm:h-10"
                         required
                       />
                     </div>
@@ -210,7 +210,7 @@ export default function LoginPage() {
                           placeholder="อย่างน้อย 8 ตัวอักษร"
                           value={registerData.password}
                           onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
-                          className="border-stone-300 focus:border-stone-500 pr-10"
+                          className="border-stone-300 focus:border-stone-500 pr-10 h-11 sm:h-10"
                           required
                           minLength={8}
                         />
@@ -231,7 +231,7 @@ export default function LoginPage() {
                         placeholder="••••••••"
                         value={registerData.confirmPassword}
                         onChange={(e) => setRegisterData({ ...registerData, confirmPassword: e.target.value })}
-                        className="border-stone-300 focus:border-stone-500"
+                        className="border-stone-300 focus:border-stone-500 h-11 sm:h-10"
                         required
                       />
                     </div>
@@ -244,9 +244,9 @@ export default function LoginPage() {
                         <Link href="/privacy" className="text-stone-900 hover:underline">นโยบายความเป็นส่วนตัว</Link>
                       </span>
                     </div>
-                    <Button 
-                      type="submit" 
-                      className="w-full bg-stone-800 hover:bg-stone-700 text-white"
+                    <Button
+                      type="submit"
+                      className="w-full bg-stone-800 hover:bg-stone-700 text-white h-11 sm:h-10"
                       disabled={isLoading}
                     >
                       {isLoading ? 'กำลังสมัครสมาชิก...' : 'สมัครสมาชิก'}
@@ -263,11 +263,11 @@ export default function LoginPage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
-                    <Button variant="outline" className="border-stone-300">
+                    <Button variant="outline" className="border-stone-300 h-11 sm:h-10">
                       <Mail className="w-4 h-4 mr-2" />
                       Google
                     </Button>
-                    <Button variant="outline" className="border-stone-300">
+                    <Button variant="outline" className="border-stone-300 h-11 sm:h-10">
                       <Github className="w-4 h-4 mr-2" />
                       GitHub
                     </Button>

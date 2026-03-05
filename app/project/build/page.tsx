@@ -13,12 +13,12 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { 
-  Box, 
-  ChevronLeft, 
-  Undo, 
-  Redo, 
-  Save, 
+import {
+  Box,
+  ChevronLeft,
+  Undo,
+  Redo,
+  Save,
   Send,
   Check,
   Home,
@@ -40,7 +40,10 @@ import {
   Copy,
   Palette,
   DollarSign,
-  ArrowRight
+  ArrowRight,
+  Menu,
+  Settings2,
+  X
 } from 'lucide-react';
 import * as THREE from 'three';
 
@@ -58,11 +61,10 @@ const StepProgress = ({ currentStep }: { currentStep: number }) => {
         {steps.map((s, index) => (
           <div key={s.step} className="flex items-center">
             <div className={`flex flex-col items-center ${s.step === currentStep ? 'text-stone-900' : s.step < currentStep ? 'text-stone-600' : 'text-stone-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold ${
-                s.step === currentStep ? 'bg-stone-800 text-white' : 
-                s.step < currentStep ? 'bg-stone-600 text-white' : 
-                'bg-stone-200 text-stone-500'
-              }`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold ${s.step === currentStep ? 'bg-stone-800 text-white' :
+                  s.step < currentStep ? 'bg-stone-600 text-white' :
+                    'bg-stone-200 text-stone-500'
+                }`}>
                 {s.step < currentStep ? <Check className="w-4 h-4" /> : s.step}
               </div>
             </div>
@@ -79,7 +81,7 @@ const StepProgress = ({ currentStep }: { currentStep: number }) => {
 // 3D Scene Components
 function Scene3D() {
   const meshRef = useRef<THREE.Mesh>(null);
-  
+
   useFrame((state) => {
     if (meshRef.current) {
       meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
@@ -91,36 +93,36 @@ function Scene3D() {
       <ambientLight intensity={0.5} />
       <directionalLight position={[10, 10, 5]} intensity={1} castShadow />
       <pointLight position={[-10, -10, -10]} intensity={0.5} />
-      
+
       {/* Ground Plane */}
-      <Plane 
-        args={[50, 50]} 
-        rotation={[-Math.PI / 2, 0, 0]} 
+      <Plane
+        args={[50, 50]}
+        rotation={[-Math.PI / 2, 0, 0]}
         position={[0, -0.5, 0]}
         receiveShadow
       >
         <meshStandardMaterial color="#e7e5e4" />
       </Plane>
-      
+
       {/* Grid Helper */}
       <primitive object={new THREE.GridHelper(50, 50, 0xa8a29e, 0xd6d3d1)} position={[0, -0.49, 0]} />
-      
+
       {/* Sample House Base */}
-      <DreiBox 
+      <DreiBox
         ref={meshRef}
-        args={[4, 0.2, 4]} 
+        args={[4, 0.2, 4]}
         position={[0, 0.1, 0]}
         castShadow
         receiveShadow
       >
         <meshStandardMaterial color="#78716c" />
       </DreiBox>
-      
+
       {/* Sample Walls */}
       <DreiBox args={[3.8, 3, 3.8]} position={[0, 1.7, 0]} castShadow>
         <meshStandardMaterial color="#f5f5f4" />
       </DreiBox>
-      
+
       {/* Sample Roof */}
       <DreiBox args={[4.2, 0.3, 4.2]} position={[0, 3.5, 0]} castShadow>
         <meshStandardMaterial color="#44403c" />
@@ -213,6 +215,10 @@ export default function BuildPage() {
   const [totalPrice, setTotalPrice] = useState(1250000);
   const [saved, setSaved] = useState(false);
 
+  // Mobile states
+  const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(false);
+  const [isRightPanelOpen, setIsRightPanelOpen] = useState(false);
+
   const handleSave = () => {
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
@@ -232,8 +238,8 @@ export default function BuildPage() {
   return (
     <div className="h-screen flex flex-col bg-stone-100">
       {/* Header */}
-      <header className="bg-white border-b border-stone-200 h-14 flex items-center justify-between px-4 shrink-0 z-50">
-        <div className="flex items-center gap-4">
+      <header className="bg-white border-b border-stone-200 h-14 flex items-center justify-between px-2 sm:px-4 shrink-0 z-50">
+        <div className="flex items-center gap-2 sm:gap-4">
           <Link href="/dashboard">
             <Button variant="ghost" size="icon" className="h-8 w-8">
               <ChevronLeft className="w-4 h-4" />
@@ -241,13 +247,15 @@ export default function BuildPage() {
           </Link>
           <Link href="/" className="flex items-center gap-2">
             <Box className="w-6 h-6 text-stone-800" />
-            <span className="text-base font-semibold text-stone-800 hidden sm:block">BluePrint3D</span>
+            <span className="text-base font-semibold text-stone-800 hidden md:block">BluePrint3D</span>
           </Link>
-          <Separator orientation="vertical" className="h-6 mx-2" />
-          <StepProgress currentStep={2} />
+          <Separator orientation="vertical" className="h-6 mx-1 sm:mx-2 hidden sm:block" />
+          <div className="hidden sm:block">
+            <StepProgress currentStep={2} />
+          </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -272,9 +280,9 @@ export default function BuildPage() {
 
           <Separator orientation="vertical" className="h-6 mx-2" />
 
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             onClick={handleSave}
             className={saved ? 'text-green-600 border-green-600' : ''}
           >
@@ -282,26 +290,46 @@ export default function BuildPage() {
             {saved ? 'บันทึกแล้ว' : 'บันทึก'}
           </Button>
 
-          <Button size="sm" onClick={handleSubmit} className="bg-stone-800 hover:bg-stone-700 text-white">
-            <Send className="w-4 h-4 mr-2" />
-            ส่งแบบ
+          <Button size="sm" onClick={handleSubmit} className="bg-stone-800 hover:bg-stone-700 text-white h-8 px-2 sm:px-3">
+            <Send className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-2" />
+            <span className="hidden sm:inline">ส่งแบบ</span>
           </Button>
         </div>
       </header>
 
       {/* Main Workspace */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden relative">
+
+        {/* Mobile Overlay for Left Panel */}
+        <AnimatePresence>
+          {isLeftPanelOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+              onClick={() => setIsLeftPanelOpen(false)}
+            />
+          )}
+        </AnimatePresence>
+
         {/* Left Sidebar - Components */}
-        <aside className="w-64 bg-white border-r border-stone-200 flex flex-col shrink-0">
-          <div className="p-3 border-b border-stone-200">
+        <aside
+          className={`bg-white border-r border-stone-200 flex flex-col shrink-0 absolute lg:static h-full z-50 transition-transform duration-300 ease-in-out w-72 lg:w-64 
+            ${isLeftPanelOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
+        >
+          <div className="p-3 border-b border-stone-200 flex items-center justify-between">
             <h2 className="text-sm font-semibold text-stone-900">ส่วนประกอบบ้าน</h2>
+            <Button variant="ghost" size="icon" className="h-6 w-6 lg:hidden" onClick={() => setIsLeftPanelOpen(false)}>
+              <X className="w-4 h-4" />
+            </Button>
           </div>
-          
+
           <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
             <TabsList className="flex flex-wrap h-auto bg-stone-50 p-1 gap-1 rounded-none">
               {Object.entries(componentCategories).map(([key, category]) => (
-                <TabsTrigger 
-                  key={key} 
+                <TabsTrigger
+                  key={key}
                   value={key}
                   className="flex-1 min-w-[60px] h-auto py-2 px-1 data-[state=active]:bg-white data-[state=active]:shadow-sm"
                 >
@@ -323,10 +351,9 @@ export default function BuildPage() {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
-                        <Card 
-                          className={`cursor-pointer border-stone-200 hover:border-stone-400 transition-colors ${
-                            selectedItems.includes(item.name) ? 'border-stone-800 bg-stone-50' : ''
-                          }`}
+                        <Card
+                          className={`cursor-pointer border-stone-200 hover:border-stone-400 transition-colors ${selectedItems.includes(item.name) ? 'border-stone-800 bg-stone-50' : ''
+                            }`}
                           onClick={() => addItem(item.name, item.price)}
                         >
                           <CardContent className="p-3">
@@ -357,7 +384,7 @@ export default function BuildPage() {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <Button variant="ghost" size="icon" className="h-8 w-8 hidden sm:inline-flex">
                     <MousePointer className="w-4 h-4" />
                   </Button>
                 </TooltipTrigger>
@@ -368,7 +395,7 @@ export default function BuildPage() {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <Button variant="ghost" size="icon" className="h-8 w-8 hidden sm:inline-flex">
                     <Hand className="w-4 h-4" />
                   </Button>
                 </TooltipTrigger>
@@ -376,7 +403,7 @@ export default function BuildPage() {
               </Tooltip>
             </TooltipProvider>
 
-            <Separator orientation="vertical" className="h-6" />
+            <Separator orientation="vertical" className="h-6 hidden sm:block" />
 
             <TooltipProvider>
               <Tooltip>
@@ -413,14 +440,15 @@ export default function BuildPage() {
           </div>
 
           {/* 3D Canvas */}
-          <Canvas 
-            shadows 
+          <Canvas
+            shadows
             camera={{ position: [15, 15, 15], fov: 45 }}
             className="w-full h-full"
+            style={{ width: '100%', height: '100%', touchAction: 'none' }} // Prevent scrolling while interacting
           >
             <Suspense fallback={null}>
               <Scene3D />
-              <OrbitControls 
+              <OrbitControls
                 enablePan={true}
                 enableZoom={true}
                 enableRotate={true}
@@ -442,13 +470,58 @@ export default function BuildPage() {
               มุมมองภายใน
             </Button>
           </div>
+          {/* Mobile Floating Action Buttons */}
+          <div className="absolute bottom-20 left-4 z-10 lg:hidden flex flex-col gap-2">
+            <Button
+              size="icon"
+              className="h-12 w-12 rounded-full shadow-xl bg-stone-800 text-white"
+              onClick={() => setIsLeftPanelOpen(true)}
+            >
+              <Menu className="w-5 h-5" />
+            </Button>
+          </div>
+
+          <div className="absolute bottom-20 right-4 z-10 lg:hidden flex flex-col gap-2">
+            <Button
+              size="icon"
+              className="h-12 w-12 rounded-full shadow-xl bg-white text-stone-800 border-2 border-stone-200"
+              onClick={() => setIsRightPanelOpen(true)}
+            >
+              <Settings2 className="w-5 h-5" />
+            </Button>
+          </div>
+
         </main>
 
+        {/* Mobile Overlay for Right Panel */}
+        <AnimatePresence>
+          {isRightPanelOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+              onClick={() => setIsRightPanelOpen(false)}
+            />
+          )}
+        </AnimatePresence>
+
         {/* Right Sidebar - Properties */}
-        <aside className="w-72 bg-white border-l border-stone-200 flex flex-col shrink-0">
+        <aside
+          className={`bg-white border-l border-stone-200 flex flex-col shrink-0 absolute right-0 lg:static h-full z-50 transition-transform duration-300 ease-in-out w-80 lg:w-72 
+            ${isRightPanelOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'}`}
+        >
           {/* Price Summary */}
-          <div className="p-4 border-b border-stone-200 bg-stone-50">
-            <div className="flex items-center gap-2 mb-2">
+          <div className="p-4 border-b border-stone-200 bg-stone-50 relative">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-6 w-6 absolute top-4 right-4 lg:hidden"
+              onClick={() => setIsRightPanelOpen(false)}
+            >
+              <X className="w-4 h-4" />
+            </Button>
+            <div className="flex items-center gap-2 mb-2 pr-6">
               <DollarSign className="w-5 h-5 text-stone-600" />
               <h3 className="font-semibold text-stone-900">ราคาประเมิน</h3>
             </div>
@@ -469,9 +542,9 @@ export default function BuildPage() {
                   selectedItems.map((item, index) => (
                     <div key={index} className="flex items-center justify-between p-2 bg-stone-50 rounded-lg">
                       <span className="text-sm text-stone-700">{item}</span>
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
+                      <Button
+                        variant="ghost"
+                        size="icon"
                         className="h-6 w-6"
                         onClick={() => {
                           setSelectedItems(selectedItems.filter((_, i) => i !== index));
@@ -528,15 +601,15 @@ export default function BuildPage() {
 
           {/* Actions */}
           <div className="p-4 border-t border-stone-200 space-y-2">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="w-full"
               onClick={() => router.push('/project/location')}
             >
               <ChevronLeft className="w-4 h-4 mr-2" />
               ย้อนกลับ
             </Button>
-            <Button 
+            <Button
               className="w-full bg-stone-800 hover:bg-stone-700 text-white"
               onClick={handleSubmit}
             >

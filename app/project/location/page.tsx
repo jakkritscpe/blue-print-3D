@@ -78,21 +78,20 @@ const StepProgress = ({ currentStep }: { currentStep: number }) => {
 
   return (
     <div className="flex items-center justify-center mb-8">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 sm:gap-4">
         {steps.map((s, index) => (
           <div key={s.step} className="flex items-center">
             <div className={`flex flex-col items-center ${s.step === currentStep ? 'text-stone-900' : s.step < currentStep ? 'text-stone-600' : 'text-stone-400'}`}>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold ${
-                s.step === currentStep ? 'bg-stone-800 text-white' : 
-                s.step < currentStep ? 'bg-stone-600 text-white' : 
-                'bg-stone-200 text-stone-500'
-              }`}>
-                {s.step < currentStep ? <Check className="w-5 h-5" /> : s.step}
+              <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-semibold ${s.step === currentStep ? 'bg-stone-800 text-white' :
+                  s.step < currentStep ? 'bg-stone-600 text-white' :
+                    'bg-stone-200 text-stone-500'
+                }`}>
+                {s.step < currentStep ? <Check className="w-4 h-4 sm:w-5 sm:h-5" /> : s.step}
               </div>
-              <span className="text-xs mt-2 font-medium">{s.label}</span>
+              <span className="text-[10px] sm:text-xs mt-1 sm:mt-2 font-medium">{s.label}</span>
             </div>
             {index < steps.length - 1 && (
-              <div className={`w-16 h-0.5 mx-4 ${s.step < currentStep ? 'bg-stone-600' : 'bg-stone-200'}`} />
+              <div className={`w-8 sm:w-16 h-0.5 mx-2 sm:mx-4 ${s.step < currentStep ? 'bg-stone-600' : 'bg-stone-200'}`} />
             )}
           </div>
         ))}
@@ -159,12 +158,11 @@ export default function LocationSelectionPage() {
                 whileHover={{ y: -4 }}
                 transition={{ duration: 0.2 }}
               >
-                <Card 
-                  className={`border-2 cursor-pointer transition-all h-full ${
-                    selectedLocation === location.id 
-                      ? 'border-stone-800 shadow-lg' 
+                <Card
+                  className={`border-2 cursor-pointer transition-all h-full ${selectedLocation === location.id
+                      ? 'border-stone-800 shadow-lg'
                       : 'border-stone-100 hover:border-stone-300'
-                  }`}
+                    }`}
                   onClick={() => setSelectedLocation(location.id)}
                 >
                   <div className="relative h-48 rounded-t-lg overflow-hidden">
@@ -213,17 +211,17 @@ export default function LocationSelectionPage() {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-between pt-6 border-t border-stone-200">
-            <Link href="/dashboard">
-              <Button variant="ghost" className="text-stone-600">
+          <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-4 pt-6 border-t border-stone-200">
+            <Link href="/dashboard" className="w-full sm:w-auto">
+              <Button variant="ghost" className="w-full sm:w-auto text-stone-600">
                 <ChevronLeft className="w-4 h-4 mr-2" />
                 ยกเลิก
               </Button>
             </Link>
-            <Button 
+            <Button
               onClick={handleNext}
               disabled={!selectedLocation}
-              className="bg-stone-800 hover:bg-stone-700 text-white px-8"
+              className="w-full sm:w-auto bg-stone-800 hover:bg-stone-700 text-white px-8"
               size="lg"
             >
               ถัดไป
