@@ -4,12 +4,12 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { 
-  ChevronRight, 
-  Box, 
-  Layers, 
-  Home, 
-  Zap, 
+import {
+  ChevronRight,
+  Box,
+  Layers,
+  Home,
+  Zap,
   Shield,
   Menu,
   X,
@@ -60,7 +60,7 @@ export default function HomePage() {
               <Box className="w-8 h-8 text-stone-800" />
               <span className="text-xl font-semibold text-stone-800">BluePrint3D</span>
             </div>
-            
+
             <div className="hidden md:flex items-center gap-8">
               <Link href="#features" className="text-stone-600 hover:text-stone-900 transition-colors">
                 จุดเด่น
@@ -86,32 +86,32 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <button 
-              className="md:hidden p-2"
+            <button
+              className="md:hidden p-3 -mr-3 flex items-center justify-center rounded-lg hover:bg-stone-50"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMenuOpen ? <X className="w-6 h-6 text-stone-800" /> : <Menu className="w-6 h-6 text-stone-800" />}
             </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="md:hidden bg-white border-t border-stone-100"
           >
-            <div className="px-4 py-4 space-y-4">
-              <Link href="#features" className="block text-stone-600">จุดเด่น</Link>
-              <Link href="#preview" className="block text-stone-600">ทดลองใช้</Link>
-              <Link href="#pricing" className="block text-stone-600">ราคา</Link>
-              <hr className="border-stone-100" />
-              <Link href="/login">
-                <Button variant="ghost" className="w-full justify-start">เข้าสู่ระบบ</Button>
+            <div className="px-4 py-4 space-y-2">
+              <Link href="#features" className="block text-stone-600 py-3 hover:bg-stone-50 px-2 rounded-lg">จุดเด่น</Link>
+              <Link href="#preview" className="block text-stone-600 py-3 hover:bg-stone-50 px-2 rounded-lg">ทดลองใช้</Link>
+              <Link href="#pricing" className="block text-stone-600 py-3 hover:bg-stone-50 px-2 rounded-lg">ราคา</Link>
+              <hr className="border-stone-100 my-2" />
+              <Link href="/login" className="block">
+                <Button variant="ghost" className="w-full justify-start h-12 text-base">เข้าสู่ระบบ</Button>
               </Link>
-              <Link href="/register">
-                <Button className="w-full bg-stone-800 text-white">สมัครสมาชิก</Button>
+              <Link href="/register" className="block">
+                <Button className="w-full bg-stone-800 text-white h-12 text-base">สมัครสมาชิก</Button>
               </Link>
             </div>
           </motion.div>
@@ -135,7 +135,7 @@ export default function HomePage() {
                 <span className="text-stone-500"> ด้วยตัวเอง</span>
               </h1>
               <p className="text-lg text-stone-600 mb-8 max-w-lg">
-                สร้างแบบบ้าน 3D ที่สวยงามและเป็นไปได้จริง 
+                สร้างแบบบ้าน 3D ที่สวยงามและเป็นไปได้จริง
                 พร้อมประเมินราคาและคำปรึกษาจากทีมงานมืออาชีพ
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -169,16 +169,16 @@ export default function HomePage() {
                   className="object-cover"
                   priority
                 />
-                
+
                 {/* Floating Cards */}
-                <motion.div 
+                <motion.div
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 3, repeat: Infinity }}
                   className="absolute top-8 right-8 bg-white rounded-xl p-4 shadow-lg z-10"
                 >
                   <Home className="w-6 h-6 text-stone-700" />
                 </motion.div>
-                <motion.div 
+                <motion.div
                   animate={{ y: [0, 10, 0] }}
                   transition={{ duration: 4, repeat: Infinity }}
                   className="absolute bottom-8 left-8 bg-white rounded-xl p-4 shadow-lg z-10"
@@ -271,7 +271,7 @@ export default function HomePage() {
                 สำรวจความเป็นไปได้ก่อนเริ่มต้น
               </h2>
               <p className="text-stone-600 mb-6">
-                ดูตัวอย่างบ้าน 3D ที่ออกแบบด้วยระบบของเรา 
+                ดูตัวอย่างบ้าน 3D ที่ออกแบบด้วยระบบของเรา
                 สัมผัสประสบการณ์การใช้งานที่ลื่นไหลและสมจริง
               </p>
               <ul className="space-y-3 mb-8">

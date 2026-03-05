@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -24,7 +24,9 @@ import {
   CheckCircle,
   AlertCircle,
   User,
-  ChevronRight
+  ChevronRight,
+  Menu,
+  X
 } from 'lucide-react';
 
 // Mock data for projects
@@ -74,6 +76,7 @@ const getStatusBadge = (status: string) => {
 export default function DashboardPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('projects');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     router.push('/');
@@ -81,13 +84,34 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-stone-50 flex">
+      {/* Mobile Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 z-40 md:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-stone-200 fixed h-full z-10">
-        <div className="p-6">
+      <aside className={`bg-white border-r border-stone-200 fixed h-full z-50 w-64 flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className="p-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Box className="w-8 h-8 text-stone-800" />
             <span className="text-xl font-semibold text-stone-800">BluePrint3D</span>
           </Link>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="md:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <X className="w-5 h-5" />
+          </Button>
         </div>
 
         <ScrollArea className="flex-1 px-4">
@@ -147,25 +171,36 @@ export default function DashboardPage() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 ml-64">
+      <main className="flex-1 w-full md:ml-64 flex flex-col min-h-screen">
         {/* Header */}
-        <header className="bg-white border-b border-stone-200 sticky top-0 z-10">
-          <div className="flex items-center justify-between px-8 py-4">
-            <div>
-              <h1 className="text-2xl font-bold text-stone-900">แดชบอร์ด</h1>
-              <p className="text-sm text-stone-600">จัดการโปรเจกต์ออกแบบบ้าน 3D ของคุณ</p>
+        <header className="bg-white border-b border-stone-200 sticky top-0 z-30">
+          <div className="flex items-center justify-between px-4 sm:px-8 py-4">
+            <div className="flex items-center gap-3">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="md:hidden -ml-2"
+                onClick={() => setIsMobileMenuOpen(true)}
+              >
+                <Menu className="w-6 h-6 text-stone-800" />
+              </Button>
+              <div>
+                <h1 className="text-xl sm:text-2xl font-bold text-stone-900">แดชบอร์ด</h1>
+                <p className="text-xs sm:text-sm text-stone-600 hidden sm:block">จัดการโปรเจกต์ออกแบบบ้าน 3D ของคุณ</p>
+              </div>
             </div>
             <Link href="/project/location">
-              <Button className="bg-stone-800 hover:bg-stone-700 text-white gap-2">
+              <Button className="bg-stone-800 hover:bg-stone-700 text-white gap-2 h-9 sm:h-10 px-3 sm:px-4">
                 <Plus className="w-4 h-4" />
-                สร้างโปรเจกต์ใหม่
+                <span className="hidden sm:inline">สร้างโปรเจกต์ใหม่</span>
+                <span className="sm:hidden">สร้างใหม่</span>
               </Button>
             </Link>
           </div>
         </header>
 
         {/* Content */}
-        <div className="p-8">
+        <div className="p-4 sm:p-8 flex-1">
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
             <Card className="border-stone-200">
