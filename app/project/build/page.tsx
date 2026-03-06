@@ -46,6 +46,8 @@ import {
   X
 } from 'lucide-react';
 import * as THREE from 'three';
+import { ThemeToggle } from '@/components/theme-toggle';
+import { AuroraBackground } from '@/components/ui/aurora-background';
 
 // Step Progress Component
 const StepProgress = ({ currentStep }: { currentStep: number }) => {
@@ -62,8 +64,8 @@ const StepProgress = ({ currentStep }: { currentStep: number }) => {
           <div key={s.step} className="flex items-center">
             <div className={`flex flex-col items-center ${s.step === currentStep ? 'text-stone-900' : s.step < currentStep ? 'text-stone-600' : 'text-stone-400'}`}>
               <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold ${s.step === currentStep ? 'bg-stone-800 text-white' :
-                  s.step < currentStep ? 'bg-stone-600 text-white' :
-                    'bg-stone-200 text-stone-500'
+                s.step < currentStep ? 'bg-stone-600 text-white' :
+                  'bg-stone-200 text-stone-500'
                 }`}>
                 {s.step < currentStep ? <Check className="w-4 h-4" /> : s.step}
               </div>
@@ -236,9 +238,9 @@ export default function BuildPage() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-stone-100">
+    <AuroraBackground className="h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-white border-b border-stone-200 h-14 flex items-center justify-between px-2 sm:px-4 shrink-0 z-50">
+      <header className="bg-white/80 dark:bg-stone-900/80 backdrop-blur-md border-b border-stone-200 dark:border-stone-800 h-14 flex items-center justify-between px-2 sm:px-4 shrink-0 z-50">
         <div className="flex items-center gap-2 sm:gap-4">
           <Link href="/dashboard">
             <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -256,6 +258,7 @@ export default function BuildPage() {
         </div>
 
         <div className="flex items-center gap-1 sm:gap-2">
+          <ThemeToggle />
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -619,6 +622,6 @@ export default function BuildPage() {
           </div>
         </aside>
       </div>
-    </div>
+    </AuroraBackground>
   );
 }
