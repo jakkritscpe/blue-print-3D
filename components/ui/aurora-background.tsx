@@ -1,62 +1,52 @@
-"use client";
+/**
+ * AuroraBackground — Server Component, pure CSS.
+ *
+ * Previous version: two full-viewport divs with blur-[80px] + background-attachment:fixed
+ * + continuous CSS animation. Caused: constant GPU repaints, scroll jank, iOS Safari breakage.
+ *
+ * New version: two static radial gradients, no animation, no blur filter.
+ * Visual character is preserved (colorful corner glows) at zero runtime cost.
+ * No 'use client' directive — rendered entirely on the server.
+ */
+
 import { cn } from "@/lib/utils";
 import React, { ReactNode } from "react";
 
-interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
+interface AuroraBackgroundProps extends React.HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
-  showRadialGradient?: boolean;
 }
 
 export const AuroraBackground = ({
   className,
   children,
-  showRadialGradient = true,
   ...props
 }: AuroraBackgroundProps) => {
   return (
     <div
       className={cn(
-        "relative flex flex-col items-center justify-center w-full overflow-hidden bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-50 transition-bg",
+        "relative flex flex-col items-center justify-center w-full overflow-hidden",
+        "bg-stone-50 dark:bg-stone-950",
         className
       )}
       {...props}
     >
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Glow 1 (Top Right) */}
-        <div
-          className={cn(
-            "absolute -inset-[10px] opacity-[0.8] dark:opacity-[0.4] will-change-transform",
-            "after:content-[''] after:absolute after:inset-0",
-            "after:bg-[repeating-linear-gradient(100deg,var(--color-blue-200)_10%,var(--color-indigo-200)_15%,var(--color-cyan-100)_20%,var(--color-teal-100)_25%,var(--color-blue-200)_30%)]",
-            "dark:after:bg-[repeating-linear-gradient(100deg,var(--color-blue-700)_10%,var(--color-indigo-600)_15%,var(--color-cyan-600)_20%,var(--color-teal-600)_25%,var(--color-blue-700)_30%)]",
-            "after:[background-size:200%,_100%] after:animate-aurora",
-            "after:[background-attachment:fixed]",
-            "filter blur-[50px] sm:blur-[80px]",
-            showRadialGradient &&
-              "[mask-image:radial-gradient(ellipse_at_100%_0%,black_30%,transparent_70%)]"
-          )}
-        ></div>
-
-        {/* Glow 2 (Bottom Left) */}
-        <div
-          className={cn(
-            "absolute -inset-[10px] opacity-[0.6] dark:opacity-[0.3] will-change-transform",
-            "after:content-[''] after:absolute after:inset-0",
-            "after:bg-[repeating-linear-gradient(100deg,var(--color-indigo-200)_10%,var(--color-purple-200)_15%,var(--color-blue-100)_20%,var(--color-cyan-100)_25%,var(--color-indigo-200)_30%)]",
-            "dark:after:bg-[repeating-linear-gradient(100deg,var(--color-indigo-700)_10%,var(--color-purple-600)_15%,var(--color-blue-600)_20%,var(--color-cyan-600)_25%,var(--color-indigo-700)_30%)]",
-            "after:[background-size:250%,_100%] after:animate-aurora after:[animation-direction:reverse] after:[animation-duration:80s]",
-            "after:[background-attachment:fixed]",
-            "filter blur-[50px] sm:blur-[80px]",
-            showRadialGradient &&
-              "[mask-image:radial-gradient(ellipse_at_0%_100%,black_20%,transparent_70%)]"
-          )}
-        ></div>
+      {/* Static gradient glows — no animation, no blur, no JS */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+      >
+        {/* Top-right glow */}
+        <div className="absolute right-0 top-0 h-[600px] w-[600px] translate-x-1/3 -translate-y-1/4 rounded-full bg-[radial-gradient(circle,rgba(165,180,252,0.35)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(99,102,241,0.18)_0%,transparent_70%)]" />
+        {/* Bottom-left glow */}
+        <div className="absolute bottom-0 left-0 h-[500px] w-[500px] -translate-x-1/3 translate-y-1/4 rounded-full bg-[radial-gradient(circle,rgba(186,230,253,0.3)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(6,182,212,0.12)_0%,transparent_70%)]" />
       </div>
-      
-      {/* Blend bottom edge */}
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-stone-50 via-stone-50/80 to-transparent dark:from-stone-950 dark:via-stone-950/80 pointer-events-none z-10" />
 
-      <div className="relative z-20 w-full flex flex-col h-full flex-1 min-h-[40rem]">{children}</div>
+      {/* Bottom edge fade into the next section */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-32 bg-gradient-to-t from-stone-50 to-transparent dark:from-stone-950" />
+
+      <div className="relative z-20 w-full flex flex-col h-full flex-1 min-h-[40rem]">
+        {children}
+      </div>
     </div>
   );
 };
