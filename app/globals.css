@@ -55,6 +55,39 @@
       background-position: 350% 50%, 350% 50%;
     }
   }
+
+  /* Hero floating badge animations — CSS only, no JS animation loop */
+  @keyframes float-up {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-12px); }
+  }
+  @keyframes float-down {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(12px); }
+  }
+
+  /*
+   * Entry animations — replace every framer-motion motion.div on the landing page.
+   * CSS animations start the moment the element is painted (before JS hydration),
+   * so they appear faster than framer-motion equivalents.
+   */
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+  @keyframes fade-in-scale {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1);    }
+  }
+
+  /*
+   * Highlight text reveal — replaces the framer-motion backgroundSize animation
+   * on the Highlight component (hero headline).
+   */
+  @keyframes expand-bg {
+    from { background-size: 0% 100%; }
+    to   { background-size: 100% 100%; }
+  }
 }
 
 :root {
@@ -136,6 +169,44 @@
 }
 
 @layer utilities {
+  /* Float animations used by hero badge overlays */
+  .animate-float-up {
+    animation: float-up 4s ease-in-out infinite;
+  }
+  .animate-float-down {
+    animation: float-down 5s ease-in-out infinite;
+    animation-delay: 1s;
+  }
+
+  /* Entry animations (replace framer-motion motion.div) */
+  .animate-fade-in-up {
+    animation: fade-in-up 0.5s ease both;
+  }
+  .animate-fade-in-up-delay {
+    animation: fade-in-up 0.5s ease 0.15s both;
+  }
+  .animate-fade-in-scale {
+    animation: fade-in-scale 0.5s ease 0.15s both;
+  }
+
+  /* Highlight text reveal (replace framer-motion motion.span backgroundSize) */
+  .animate-expand-bg {
+    animation: expand-bg 2s linear 0.5s both;
+  }
+
+  /* Respect user motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float-up,
+    .animate-float-down,
+    .animate-aurora,
+    .animate-fade-in-up,
+    .animate-fade-in-up-delay,
+    .animate-fade-in-scale,
+    .animate-expand-bg {
+      animation: none;
+    }
+  }
+
   .bg-dot-thick-stone-300 {
     background-image: radial-gradient(var(--color-stone-300) 2px, transparent 2px);
     background-size: 32px 32px;
