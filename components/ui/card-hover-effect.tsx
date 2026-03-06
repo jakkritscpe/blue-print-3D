@@ -1,7 +1,17 @@
+/**
+ * HoverEffect — Server Component, CSS-only hover.
+ *
+ * Previous version: 'use client' + framer-motion AnimatePresence + motion.div
+ * with `layoutId="hoverBackground"` for a cross-card sliding highlight.
+ *
+ * New version: CSS group-hover with opacity transition on a pseudo-div.
+ * The layoutId cross-card slide is dropped — each card gets its own instant
+ * highlight on hover, which is equally premium and requires zero JavaScript.
+ * No 'use client', no useState, no framer-motion import.
+ */
+
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
 
 export const HoverEffect = ({
   items,
@@ -15,8 +25,6 @@ export const HoverEffect = ({
   }[];
   className?: string;
 }) => {
-  let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
   return (
     <div
       className={cn(
@@ -26,29 +34,13 @@ export const HoverEffect = ({
     >
       {items.map((item, idx) => (
         <Link
-          href={item?.link}
-          key={item?.link + idx}
-          className="relative group  block p-2 h-full w-full"
-          onMouseEnter={() => setHoveredIndex(idx)}
-          onMouseLeave={() => setHoveredIndex(null)}
+          href={item.link}
+          key={item.link + idx}
+          className="relative group block p-2 h-full w-full"
         >
-          <AnimatePresence>
-            {hoveredIndex === idx && (
-              <motion.div
-                className="absolute inset-0 h-full w-full bg-stone-200 dark:bg-stone-800/[0.8] block  rounded-3xl"
-                layoutId="hoverBackground"
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: 1,
-                  transition: { duration: 0.15 },
-                }}
-                exit={{
-                  opacity: 0,
-                  transition: { duration: 0.15, delay: 0.2 },
-                }}
-              />
-            )}
-          </AnimatePresence>
+          {/* CSS hover highlight — replaces framer-motion layoutId background */}
+          <div className="absolute inset-0 rounded-3xl bg-stone-200 dark:bg-stone-800/80 opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+
           <Card>
             <div className="mb-4 text-stone-600 dark:text-stone-300">
               {item.icon}
@@ -72,7 +64,11 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "rounded-2xl h-full w-full p-2 sm:p-3 overflow-hidden bg-white dark:bg-stone-900 border border-transparent dark:border-white/[0.2] group-hover:border-stone-300 dark:group-hover:border-stone-700 relative z-20 shadow-sm transition-all duration-300",
+        "rounded-2xl h-full w-full p-2 sm:p-3 overflow-hidden",
+        "bg-white dark:bg-stone-900",
+        "border border-transparent dark:border-white/[0.2]",
+        "group-hover:border-stone-300 dark:group-hover:border-stone-700",
+        "relative z-20 shadow-sm transition-colors duration-150",
         className
       )}
     >
@@ -82,6 +78,7 @@ export const Card = ({
     </div>
   );
 };
+
 export const CardTitle = ({
   className,
   children,
@@ -90,11 +87,17 @@ export const CardTitle = ({
   children: React.ReactNode;
 }) => {
   return (
-    <h4 className={cn("text-stone-900 dark:text-stone-100 font-bold tracking-wide mt-2 sm:mt-3 text-base sm:text-lg", className)}>
+    <h4
+      className={cn(
+        "text-stone-900 dark:text-stone-100 font-bold tracking-wide mt-2 sm:mt-3 text-base sm:text-lg",
+        className
+      )}
+    >
       {children}
     </h4>
   );
 };
+
 export const CardDescription = ({
   className,
   children,
