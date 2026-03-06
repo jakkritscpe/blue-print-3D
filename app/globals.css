@@ -45,18 +45,14 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
-  
+
   --animate-aurora: aurora 60s linear infinite;
   @keyframes aurora {
-    from {
-      background-position: 50% 50%, 50% 50%;
-    }
-    to {
-      background-position: 350% 50%, 350% 50%;
-    }
+    from { background-position: 50% 50%, 50% 50%; }
+    to   { background-position: 350% 50%, 350% 50%; }
   }
 
-  /* Hero floating badge animations — CSS only, no JS animation loop */
+  /* Hero floating badge animations */
   @keyframes float-up {
     0%, 100% { transform: translateY(0px); }
     50%       { transform: translateY(-12px); }
@@ -66,97 +62,99 @@
     50%       { transform: translateY(12px); }
   }
 
-  /*
-   * Entry animations — replace every framer-motion motion.div on the landing page.
-   * CSS animations start the moment the element is painted (before JS hydration),
-   * so they appear faster than framer-motion equivalents.
-   */
+  /* Entry animations */
   @keyframes fade-in-up {
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0);    }
   }
   @keyframes fade-in-scale {
-    from { opacity: 0; transform: scale(0.95); }
+    from { opacity: 0; transform: scale(0.97); }
     to   { opacity: 1; transform: scale(1);    }
   }
 
-  /*
-   * Highlight text reveal — replaces the framer-motion backgroundSize animation
-   * on the Highlight component (hero headline).
-   */
+  /* Highlight text reveal */
   @keyframes expand-bg {
     from { background-size: 0% 100%; }
     to   { background-size: 100% 100%; }
   }
+
+  /* Sparkle particle animation */
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0.3); }
+    50%       { opacity: 1; transform: scale(1);   }
+  }
 }
 
+/* ─── Blueprint Tech — Light Mode ──────────────────────────────────────────── */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.147 0.004 49.25);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.147 0.004 49.25);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.147 0.004 49.25);
-  --primary: oklch(0.216 0.006 56.043);
-  --primary-foreground: oklch(0.985 0.001 106.423);
-  --secondary: oklch(0.97 0.001 106.424);
-  --secondary-foreground: oklch(0.216 0.006 56.043);
-  --muted: oklch(0.97 0.001 106.424);
-  --muted-foreground: oklch(0.553 0.013 58.071);
-  --accent: oklch(0.97 0.001 106.424);
-  --accent-foreground: oklch(0.216 0.006 56.043);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.923 0.003 48.717);
-  --input: oklch(0.923 0.003 48.717);
-  --ring: oklch(0.709 0.01 56.259);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0.001 106.423);
-  --sidebar-foreground: oklch(0.147 0.004 49.25);
-  --sidebar-primary: oklch(0.216 0.006 56.043);
-  --sidebar-primary-foreground: oklch(0.985 0.001 106.423);
-  --sidebar-accent: oklch(0.97 0.001 106.424);
-  --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
-  --sidebar-border: oklch(0.923 0.003 48.717);
-  --sidebar-ring: oklch(0.709 0.01 56.259);
+  --radius: 0.75rem;
+
+  --background:           oklch(0.97 0.015 230);   /* soft blue-white   */
+  --foreground:           oklch(0.13 0.03  255);   /* deep navy text    */
+  --card:                 oklch(1    0     0  );   /* pure white        */
+  --card-foreground:      oklch(0.13 0.03  255);
+  --popover:              oklch(1    0     0  );
+  --popover-foreground:   oklch(0.13 0.03  255);
+  --primary:              oklch(0.27 0.075 230);   /* deep navy #0B3C5D */
+  --primary-foreground:   oklch(1    0     0  );   /* white             */
+  --secondary:            oklch(0.94 0.03  220);   /* soft blue #E6F2FA */
+  --secondary-foreground: oklch(0.27 0.075 230);
+  --muted:                oklch(0.93 0.025 225);
+  --muted-foreground:     oklch(0.50 0.055 235);
+  --accent:               oklch(0.68 0.14  210);   /* cyan #00AEEF      */
+  --accent-foreground:    oklch(1    0     0  );
+  --destructive:          oklch(0.577 0.245 27.325);
+  --border:               oklch(0.88 0.03  225);
+  --input:                oklch(0.92 0.02  220);
+  --ring:                 oklch(0.52 0.125 225);   /* blueprint blue    */
+  --chart-1:              oklch(0.52 0.125 225);
+  --chart-2:              oklch(0.68 0.14  210);
+  --chart-3:              oklch(0.27 0.075 230);
+  --chart-4:              oklch(0.75 0.10  200);
+  --chart-5:              oklch(0.60 0.15  240);
+  --sidebar:              oklch(0.97 0.015 230);
+  --sidebar-foreground:   oklch(0.13 0.03  255);
+  --sidebar-primary:      oklch(0.27 0.075 230);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent:       oklch(0.94 0.03  220);
+  --sidebar-accent-foreground: oklch(0.27 0.075 230);
+  --sidebar-border:       oklch(0.88 0.03  225);
+  --sidebar-ring:         oklch(0.52 0.125 225);
 }
 
+/* ─── Blueprint Tech — Dark Mode ────────────────────────────────────────────── */
 .dark {
-  --background: oklch(0.147 0.004 49.25);
-  --foreground: oklch(0.985 0.001 106.423);
-  --card: oklch(0.216 0.006 56.043);
-  --card-foreground: oklch(0.985 0.001 106.423);
-  --popover: oklch(0.216 0.006 56.043);
-  --popover-foreground: oklch(0.985 0.001 106.423);
-  --primary: oklch(0.923 0.003 48.717);
-  --primary-foreground: oklch(0.216 0.006 56.043);
-  --secondary: oklch(0.268 0.007 34.298);
-  --secondary-foreground: oklch(0.985 0.001 106.423);
-  --muted: oklch(0.268 0.007 34.298);
-  --muted-foreground: oklch(0.709 0.01 56.259);
-  --accent: oklch(0.268 0.007 34.298);
-  --accent-foreground: oklch(0.985 0.001 106.423);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.553 0.013 58.071);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.216 0.006 56.043);
-  --sidebar-foreground: oklch(0.985 0.001 106.423);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0.001 106.423);
-  --sidebar-accent: oklch(0.268 0.007 34.298);
-  --sidebar-accent-foreground: oklch(0.985 0.001 106.423);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.553 0.013 58.071);
+  --background:           oklch(0.16 0.06  235);   /* deep navy #071E3D  */
+  --foreground:           oklch(0.95 0.02  215);   /* soft blue-white    */
+  --card:                 oklch(0.21 0.065 232);   /* lighter navy card  */
+  --card-foreground:      oklch(0.95 0.02  215);
+  --popover:              oklch(0.21 0.065 232);
+  --popover-foreground:   oklch(0.95 0.02  215);
+  --primary:              oklch(0.52 0.125 225);   /* blueprint blue     */
+  --primary-foreground:   oklch(1    0     0  );
+  --secondary:            oklch(0.26 0.07  235);
+  --secondary-foreground: oklch(0.95 0.02  215);
+  --muted:                oklch(0.26 0.07  235);
+  --muted-foreground:     oklch(0.65 0.07  225);
+  --accent:               oklch(0.68 0.14  210);   /* cyan stays         */
+  --accent-foreground:    oklch(0.13 0.03  255);
+  --destructive:          oklch(0.704 0.191 22.216);
+  --border:               oklch(1    0     0   / 12%);
+  --input:                oklch(1    0     0   / 15%);
+  --ring:                 oklch(0.68 0.14  210);   /* cyan ring          */
+  --chart-1:              oklch(0.68 0.14  210);
+  --chart-2:              oklch(0.52 0.125 225);
+  --chart-3:              oklch(0.75 0.10  200);
+  --chart-4:              oklch(0.60 0.15  240);
+  --chart-5:              oklch(0.80 0.12  215);
+  --sidebar:              oklch(0.21 0.065 232);
+  --sidebar-foreground:   oklch(0.95 0.02  215);
+  --sidebar-primary:      oklch(0.52 0.125 225);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent:       oklch(0.26 0.07  235);
+  --sidebar-accent-foreground: oklch(0.95 0.02 215);
+  --sidebar-border:       oklch(1 0 0 / 12%);
+  --sidebar-ring:         oklch(0.68 0.14  210);
 }
 
 @layer base {
@@ -169,7 +167,7 @@
 }
 
 @layer utilities {
-  /* Float animations used by hero badge overlays */
+  /* Float animations */
   .animate-float-up {
     animation: float-up 4s ease-in-out infinite;
   }
@@ -178,7 +176,7 @@
     animation-delay: 1s;
   }
 
-  /* Entry animations (replace framer-motion motion.div) */
+  /* Entry animations */
   .animate-fade-in-up {
     animation: fade-in-up 0.5s ease both;
   }
@@ -186,15 +184,23 @@
     animation: fade-in-up 0.5s ease 0.15s both;
   }
   .animate-fade-in-scale {
-    animation: fade-in-scale 0.5s ease 0.15s both;
+    animation: fade-in-scale 0.6s ease 0.1s both;
   }
 
-  /* Highlight text reveal (replace framer-motion motion.span backgroundSize) */
+  /* Highlight text reveal */
   .animate-expand-bg {
     animation: expand-bg 2s linear 0.5s both;
   }
 
-  /* Respect user motion preferences */
+  /* Sparkle particles */
+  .animate-sparkle-1 { animation: sparkle 3s   ease-in-out infinite; }
+  .animate-sparkle-2 { animation: sparkle 4s   ease-in-out infinite 1s; }
+  .animate-sparkle-3 { animation: sparkle 3.5s ease-in-out infinite 0.5s; }
+  .animate-sparkle-4 { animation: sparkle 5s   ease-in-out infinite 2s; }
+  .animate-sparkle-5 { animation: sparkle 4s   ease-in-out infinite 1.5s; }
+  .animate-sparkle-6 { animation: sparkle 3.2s ease-in-out infinite 0.8s; }
+
+  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .animate-float-up,
     .animate-float-down,
@@ -202,23 +208,17 @@
     .animate-fade-in-up,
     .animate-fade-in-up-delay,
     .animate-fade-in-scale,
-    .animate-expand-bg {
+    .animate-expand-bg,
+    .animate-sparkle-1,
+    .animate-sparkle-2,
+    .animate-sparkle-3,
+    .animate-sparkle-4,
+    .animate-sparkle-5,
+    .animate-sparkle-6 {
       animation: none;
     }
   }
 
-  .bg-dot-thick-stone-300 {
-    background-image: radial-gradient(var(--color-stone-300) 2px, transparent 2px);
-    background-size: 32px 32px;
-  }
-  .bg-dot-thick-stone-800 {
-    background-image: radial-gradient(var(--color-stone-800) 2px, transparent 2px);
-    background-size: 32px 32px;
-  }
-  .bg-dot-thick-indigo-500 {
-    background-image: radial-gradient(var(--color-indigo-500) 2px, transparent 2px);
-    background-size: 32px 32px;
-  }
   .bg-grid-pattern-light {
     background-size: 40px 40px;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),

@@ -28,6 +28,7 @@ import {
   Menu,
   X
 } from 'lucide-react';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState('profile');
@@ -60,7 +61,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 flex">
+    <div className="min-h-screen bg-stone-50 dark:bg-stone-950 flex">
       {/* Mobile Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
@@ -75,11 +76,11 @@ export default function SettingsPage() {
       </AnimatePresence>
 
       {/* Sidebar */}
-      <aside className={`bg-white border-r border-stone-200 fixed h-full z-50 w-64 flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`bg-white dark:bg-stone-900 border-r border-stone-200 dark:border-stone-800 fixed h-full z-50 w-64 flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="p-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <Box className="w-8 h-8 text-stone-800" />
-            <span className="text-xl font-semibold text-stone-800">BluePrint3D</span>
+            <Box className="w-8 h-8 text-stone-800 dark:text-stone-100" />
+            <span className="text-xl font-semibold text-stone-800 dark:text-stone-100">BluePrint3D</span>
           </Link>
           <Button
             variant="ghost"
@@ -114,15 +115,15 @@ export default function SettingsPage() {
           </nav>
         </ScrollArea>
 
-        <div className="p-4 border-t border-stone-200">
+        <div className="p-4 border-t border-stone-200 dark:border-stone-800">
           <Button variant="ghost" className="w-full justify-start gap-3 h-auto py-3">
             <Avatar className="w-8 h-8">
               <AvatarImage src="/images/avatar/user.jpg" />
-              <AvatarFallback className="bg-stone-200 text-stone-700">JD</AvatarFallback>
+              <AvatarFallback className="bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300">JD</AvatarFallback>
             </Avatar>
             <div className="flex-1 text-left">
-              <p className="text-sm font-medium text-stone-900">John Doe</p>
-              <p className="text-xs text-stone-500">john@example.com</p>
+              <p className="text-sm font-medium text-stone-900 dark:text-stone-50">John Doe</p>
+              <p className="text-xs text-stone-500 dark:text-stone-400">john@example.com</p>
             </div>
             <LogOut className="w-4 h-4 text-stone-400" />
           </Button>
@@ -132,25 +133,28 @@ export default function SettingsPage() {
       {/* Main Content */}
       <main className="flex-1 w-full md:ml-64 flex flex-col min-h-screen">
         {/* Header */}
-        <header className="bg-white border-b border-stone-200 sticky top-0 z-30">
-          <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-8 py-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden -ml-2"
-              onClick={() => setIsMobileMenuOpen(true)}
-            >
-              <Menu className="w-6 h-6 text-stone-800" />
-            </Button>
-            <Link href="/dashboard" className="hidden sm:block">
-              <Button variant="ghost" size="icon">
-                <ChevronLeft className="w-5 h-5" />
+        <header className="bg-white dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800 sticky top-0 z-30">
+          <div className="flex items-center justify-between px-4 sm:px-8 py-4">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden -ml-2"
+                onClick={() => setIsMobileMenuOpen(true)}
+              >
+                <Menu className="w-6 h-6 text-stone-800 dark:text-stone-100" />
               </Button>
-            </Link>
-            <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-stone-900">ตั้งค่าบัญชี</h1>
-              <p className="text-xs sm:text-sm text-stone-600 hidden sm:block">จัดการข้อมูลส่วนตัวและการตั้งค่าความปลอดภัย</p>
+              <Link href="/dashboard" className="hidden sm:block">
+                <Button variant="ghost" size="icon">
+                  <ChevronLeft className="w-5 h-5" />
+                </Button>
+              </Link>
+              <div>
+                <h1 className="text-xl sm:text-2xl font-bold text-stone-900 dark:text-stone-50">ตั้งค่าบัญชี</h1>
+                <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 hidden sm:block">จัดการข้อมูลส่วนตัวและการตั้งค่าความปลอดภัย</p>
+              </div>
             </div>
+            <ThemeToggle />
           </div>
         </header>
 
@@ -163,18 +167,18 @@ export default function SettingsPage() {
             className="max-w-3xl"
           >
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="bg-stone-100 mb-6">
-                <TabsTrigger value="profile" className="data-[state=active]:bg-white">ข้อมูลส่วนตัว</TabsTrigger>
-                <TabsTrigger value="security" className="data-[state=active]:bg-white">ความปลอดภัย</TabsTrigger>
-                <TabsTrigger value="notifications" className="data-[state=active]:bg-white">การแจ้งเตือน</TabsTrigger>
+              <TabsList className="bg-stone-100 dark:bg-stone-800 mb-6">
+                <TabsTrigger value="profile" className="data-[state=active]:bg-white dark:data-[state=active]:bg-stone-700">ข้อมูลส่วนตัว</TabsTrigger>
+                <TabsTrigger value="security" className="data-[state=active]:bg-white dark:data-[state=active]:bg-stone-700">ความปลอดภัย</TabsTrigger>
+                <TabsTrigger value="notifications" className="data-[state=active]:bg-white dark:data-[state=active]:bg-stone-700">การแจ้งเตือน</TabsTrigger>
               </TabsList>
 
               {/* Profile Tab */}
               <TabsContent value="profile">
-                <Card className="border-stone-200">
+                <Card className="border-stone-200 dark:border-stone-700">
                   <CardHeader>
-                    <CardTitle>ข้อมูลส่วนตัว</CardTitle>
-                    <CardDescription>
+                    <CardTitle className="text-stone-900 dark:text-stone-50">ข้อมูลส่วนตัว</CardTitle>
+                    <CardDescription className="text-stone-600 dark:text-stone-400">
                       อัปเดตข้อมูลส่วนตัวและรูปโปรไฟล์ของคุณ
                     </CardDescription>
                   </CardHeader>
@@ -184,7 +188,7 @@ export default function SettingsPage() {
                       <div className="relative">
                         <Avatar className="w-24 h-24">
                           <AvatarImage src="/images/avatar/user.jpg" />
-                          <AvatarFallback className="bg-stone-200 text-stone-700 text-2xl">JD</AvatarFallback>
+                          <AvatarFallback className="bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300 text-2xl">JD</AvatarFallback>
                         </Avatar>
                         <Button
                           size="icon"
@@ -194,8 +198,8 @@ export default function SettingsPage() {
                         </Button>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-stone-900">รูปโปรไฟล์</h3>
-                        <p className="text-sm text-stone-600">รองรับไฟล์ JPG, PNG ขนาดไม่เกิน 2MB</p>
+                        <h3 className="font-semibold text-stone-900 dark:text-stone-50">รูปโปรไฟล์</h3>
+                        <p className="text-sm text-stone-600 dark:text-stone-400">รองรับไฟล์ JPG, PNG ขนาดไม่เกิน 2MB</p>
                         <div className="flex gap-2 mt-2">
                           <Button variant="outline" size="sm">อัปโหลดรูปใหม่</Button>
                           <Button variant="ghost" size="sm" className="text-red-600">ลบรูป</Button>
@@ -203,24 +207,24 @@ export default function SettingsPage() {
                       </div>
                     </div>
 
-                    <Separator className="bg-stone-100" />
+                    <Separator className="bg-stone-100 dark:bg-stone-700" />
 
                     {/* Form Fields */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="name" className="text-stone-700">ชื่อ-นามสกุล</Label>
+                        <Label htmlFor="name" className="text-stone-700 dark:text-stone-300">ชื่อ-นามสกุล</Label>
                         <div className="relative">
                           <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
                           <Input
                             id="name"
                             value={profileData.name}
                             onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
-                            className="pl-10 border-stone-300"
+                            className="pl-10 border-stone-300 dark:border-stone-600"
                           />
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="email" className="text-stone-700">อีเมล</Label>
+                        <Label htmlFor="email" className="text-stone-700 dark:text-stone-300">อีเมล</Label>
                         <div className="relative">
                           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
                           <Input
@@ -228,44 +232,44 @@ export default function SettingsPage() {
                             type="email"
                             value={profileData.email}
                             onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
-                            className="pl-10 border-stone-300"
+                            className="pl-10 border-stone-300 dark:border-stone-600"
                           />
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="phone" className="text-stone-700">เบอร์โทรศัพท์</Label>
+                        <Label htmlFor="phone" className="text-stone-700 dark:text-stone-300">เบอร์โทรศัพท์</Label>
                         <div className="relative">
                           <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
                           <Input
                             id="phone"
                             value={profileData.phone}
                             onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
-                            className="pl-10 border-stone-300"
+                            className="pl-10 border-stone-300 dark:border-stone-600"
                           />
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="address" className="text-stone-700">ที่อยู่</Label>
+                        <Label htmlFor="address" className="text-stone-700 dark:text-stone-300">ที่อยู่</Label>
                         <div className="relative">
                           <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
                           <Input
                             id="address"
                             value={profileData.address}
                             onChange={(e) => setProfileData({ ...profileData, address: e.target.value })}
-                            className="pl-10 border-stone-300"
+                            className="pl-10 border-stone-300 dark:border-stone-600"
                           />
                         </div>
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="bio" className="text-stone-700">เกี่ยวกับฉัน</Label>
+                      <Label htmlFor="bio" className="text-stone-700 dark:text-stone-300">เกี่ยวกับฉัน</Label>
                       <textarea
                         id="bio"
                         rows={3}
                         value={profileData.bio}
                         onChange={(e) => setProfileData({ ...profileData, bio: e.target.value })}
-                        className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 resize-none"
+                        className="w-full px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 dark:focus:ring-stone-400 resize-none bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-50"
                       />
                     </div>
 
@@ -285,57 +289,57 @@ export default function SettingsPage() {
 
               {/* Security Tab */}
               <TabsContent value="security">
-                <Card className="border-stone-200">
+                <Card className="border-stone-200 dark:border-stone-700">
                   <CardHeader>
-                    <CardTitle>เปลี่ยนรหัสผ่าน</CardTitle>
-                    <CardDescription>
+                    <CardTitle className="text-stone-900 dark:text-stone-50">เปลี่ยนรหัสผ่าน</CardTitle>
+                    <CardDescription className="text-stone-600 dark:text-stone-400">
                       อัปเดตรหัสผ่านเพื่อความปลอดภัยของบัญชี
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="current-password" className="text-stone-700">รหัสผ่านปัจจุบัน</Label>
+                      <Label htmlFor="current-password" className="text-stone-700 dark:text-stone-300">รหัสผ่านปัจจุบัน</Label>
                       <div className="relative">
                         <Input
                           id="current-password"
                           type={showPassword ? 'text' : 'password'}
                           value={passwordData.currentPassword}
                           onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
-                          className="border-stone-300 pr-10"
+                          className="border-stone-300 dark:border-stone-600 pr-10"
                           placeholder="••••••••"
                         />
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 dark:hover:text-stone-300"
                         >
                           {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                         </button>
                       </div>
                     </div>
 
-                    <Separator className="bg-stone-100" />
+                    <Separator className="bg-stone-100 dark:bg-stone-700" />
 
                     <div className="space-y-2">
-                      <Label htmlFor="new-password" className="text-stone-700">รหัสผ่านใหม่</Label>
+                      <Label htmlFor="new-password" className="text-stone-700 dark:text-stone-300">รหัสผ่านใหม่</Label>
                       <Input
                         id="new-password"
                         type="password"
                         value={passwordData.newPassword}
                         onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
-                        className="border-stone-300"
+                        className="border-stone-300 dark:border-stone-600"
                         placeholder="อย่างน้อย 8 ตัวอักษร"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="confirm-password" className="text-stone-700">ยืนยันรหัสผ่านใหม่</Label>
+                      <Label htmlFor="confirm-password" className="text-stone-700 dark:text-stone-300">ยืนยันรหัสผ่านใหม่</Label>
                       <Input
                         id="confirm-password"
                         type="password"
                         value={passwordData.confirmPassword}
                         onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
-                        className="border-stone-300"
+                        className="border-stone-300 dark:border-stone-600"
                         placeholder="••••••••"
                       />
                     </div>
@@ -353,18 +357,18 @@ export default function SettingsPage() {
                   </CardContent>
                 </Card>
 
-                <Card className="border-stone-200 mt-6">
+                <Card className="border-stone-200 dark:border-stone-700 mt-6">
                   <CardHeader>
-                    <CardTitle>การยืนยันตัวตนแบบสองขั้นตอน (2FA)</CardTitle>
-                    <CardDescription>
+                    <CardTitle className="text-stone-900 dark:text-stone-50">การยืนยันตัวตนแบบสองขั้นตอน (2FA)</CardTitle>
+                    <CardDescription className="text-stone-600 dark:text-stone-400">
                       เพิ่มความปลอดภัยด้วยการยืนยันตัวตนเพิ่มเติม
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="font-medium text-stone-900">ยืนยันด้วยเบอร์โทรศัพท์</h3>
-                        <p className="text-sm text-stone-600">รับรหัส OTP ทาง SMS เมื่อเข้าสู่ระบบ</p>
+                        <h3 className="font-medium text-stone-900 dark:text-stone-50">ยืนยันด้วยเบอร์โทรศัพท์</h3>
+                        <p className="text-sm text-stone-600 dark:text-stone-400">รับรหัส OTP ทาง SMS เมื่อเข้าสู่ระบบ</p>
                       </div>
                       <Button variant="outline">เปิดใช้งาน</Button>
                     </div>
@@ -374,10 +378,10 @@ export default function SettingsPage() {
 
               {/* Notifications Tab */}
               <TabsContent value="notifications">
-                <Card className="border-stone-200">
+                <Card className="border-stone-200 dark:border-stone-700">
                   <CardHeader>
-                    <CardTitle>การแจ้งเตือน</CardTitle>
-                    <CardDescription>
+                    <CardTitle className="text-stone-900 dark:text-stone-50">การแจ้งเตือน</CardTitle>
+                    <CardDescription className="text-stone-600 dark:text-stone-400">
                       จัดการการแจ้งเตือนที่คุณต้องการรับ
                     </CardDescription>
                   </CardHeader>
@@ -388,14 +392,14 @@ export default function SettingsPage() {
                       { label: 'ข่าวสารและโปรโมชั่น', description: 'รับข้อมูลข่าวสารและส่วนลดพิเศษ', checked: false },
                       { label: 'อัปเดตระบบ', description: 'แจ้งเตือนเมื่อมีฟีเจอร์ใหม่ในระบบ', checked: true }
                     ].map((item, index) => (
-                      <div key={index} className="flex items-start justify-between py-3 border-b border-stone-100 last:border-0">
+                      <div key={index} className="flex items-start justify-between py-3 border-b border-stone-100 dark:border-stone-700 last:border-0">
                         <div>
-                          <h3 className="font-medium text-stone-900">{item.label}</h3>
-                          <p className="text-sm text-stone-600">{item.description}</p>
+                          <h3 className="font-medium text-stone-900 dark:text-stone-50">{item.label}</h3>
+                          <p className="text-sm text-stone-600 dark:text-stone-400">{item.description}</p>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
                           <input type="checkbox" defaultChecked={item.checked} className="sr-only peer" />
-                          <div className="w-11 h-6 bg-stone-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-stone-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-stone-800"></div>
+                          <div className="w-11 h-6 bg-stone-200 dark:bg-stone-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-stone-300 dark:peer-focus:ring-stone-600 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-stone-800 dark:peer-checked:bg-stone-300"></div>
                         </label>
                       </div>
                     ))}

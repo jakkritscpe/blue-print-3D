@@ -5,10 +5,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Box, ChevronLeft, MapPin, Maximize, Check, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 // Mock locations data
 const locations = [
@@ -81,17 +82,17 @@ const StepProgress = ({ currentStep }: { currentStep: number }) => {
       <div className="flex items-center gap-2 sm:gap-4">
         {steps.map((s, index) => (
           <div key={s.step} className="flex items-center">
-            <div className={`flex flex-col items-center ${s.step === currentStep ? 'text-stone-900' : s.step < currentStep ? 'text-stone-600' : 'text-stone-400'}`}>
-              <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-semibold ${s.step === currentStep ? 'bg-stone-800 text-white' :
-                s.step < currentStep ? 'bg-stone-600 text-white' :
-                  'bg-stone-200 text-stone-500'
+            <div className={`flex flex-col items-center ${s.step === currentStep ? 'text-stone-900 dark:text-stone-50' : s.step < currentStep ? 'text-stone-600 dark:text-stone-400' : 'text-stone-400 dark:text-stone-500'}`}>
+              <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-semibold ${s.step === currentStep ? 'bg-stone-800 dark:bg-stone-200 text-white dark:text-stone-900' :
+                s.step < currentStep ? 'bg-stone-600 dark:bg-stone-500 text-white' :
+                  'bg-stone-200 dark:bg-stone-700 text-stone-500 dark:text-stone-400'
                 }`}>
                 {s.step < currentStep ? <Check className="w-4 h-4 sm:w-5 sm:h-5" /> : s.step}
               </div>
               <span className="text-[10px] sm:text-xs mt-1 sm:mt-2 font-medium">{s.label}</span>
             </div>
             {index < steps.length - 1 && (
-              <div className={`w-8 sm:w-16 h-0.5 mx-2 sm:mx-4 ${s.step < currentStep ? 'bg-stone-600' : 'bg-stone-200'}`} />
+              <div className={`w-8 sm:w-16 h-0.5 mx-2 sm:mx-4 ${s.step < currentStep ? 'bg-stone-600 dark:bg-stone-500' : 'bg-stone-200 dark:bg-stone-700'}`} />
             )}
           </div>
         ))}
@@ -111,9 +112,9 @@ export default function LocationSelectionPage() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-stone-50 dark:bg-stone-950">
       {/* Header */}
-      <header className="bg-white border-b border-stone-200 sticky top-0 z-50">
+      <header className="bg-white dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
@@ -123,12 +124,13 @@ export default function LocationSelectionPage() {
                 </Button>
               </Link>
               <Link href="/" className="flex items-center gap-2">
-                <Box className="w-7 h-7 text-stone-800" />
-                <span className="text-lg font-semibold text-stone-800">BluePrint3D</span>
+                <Box className="w-7 h-7 text-stone-800 dark:text-stone-100" />
+                <span className="text-lg font-semibold text-stone-800 dark:text-stone-100">BluePrint3D</span>
               </Link>
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-sm text-stone-600">ขั้นตอนที่ 1 จาก 3</span>
+              <span className="text-sm text-stone-600 dark:text-stone-400">ขั้นตอนที่ 1 จาก 3</span>
+              <ThemeToggle />
             </div>
           </div>
         </div>
@@ -142,8 +144,8 @@ export default function LocationSelectionPage() {
           transition={{ duration: 0.5 }}
         >
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-stone-900 mb-3">เลือกทำเลที่ตั้ง</h1>
-            <p className="text-stone-600 max-w-2xl mx-auto">
+            <h1 className="text-3xl font-bold text-stone-900 dark:text-stone-50 mb-3">เลือกทำเลที่ตั้ง</h1>
+            <p className="text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
               เลือกทำเลที่ตั้งสำหรับโครงการของคุณ ข้อมูลพื้นที่จะถูกนำไปใช้ในการออกแบบ 3D
             </p>
           </div>
@@ -160,12 +162,12 @@ export default function LocationSelectionPage() {
               >
                 <Card
                   className={`border-2 cursor-pointer transition-all h-full overflow-hidden p-0 gap-0 flex flex-col ${selectedLocation === location.id
-                    ? 'border-stone-800 shadow-lg'
-                    : 'border-stone-100 hover:border-stone-300'
+                    ? 'border-stone-800 dark:border-stone-200 shadow-lg'
+                    : 'border-stone-100 dark:border-stone-700 hover:border-stone-300 dark:hover:border-stone-500'
                     }`}
                   onClick={() => setSelectedLocation(location.id)}
                 >
-                  <div className="relative h-48 sm:h-52 w-full bg-stone-100 flex-shrink-0">
+                  <div className="relative h-48 sm:h-52 w-full bg-stone-100 dark:bg-stone-800 flex-shrink-0">
                     <Image
                       src={location.image}
                       alt={location.name}
@@ -175,10 +177,10 @@ export default function LocationSelectionPage() {
                   </div>
                   <CardHeader className="pt-6 pb-3">
                     <div className="flex items-start justify-between">
-                      <CardTitle className="text-lg text-stone-900">{location.name}</CardTitle>
+                      <CardTitle className="text-lg text-stone-900 dark:text-stone-50">{location.name}</CardTitle>
                       {selectedLocation === location.id && (
-                        <div className="w-6 h-6 bg-stone-800 rounded-full flex items-center justify-center">
-                          <Check className="w-4 h-4 text-white" />
+                        <div className="w-6 h-6 bg-stone-800 dark:bg-stone-200 rounded-full flex items-center justify-center">
+                          <Check className="w-4 h-4 text-white dark:text-stone-900" />
                         </div>
                       )}
                     </div>
@@ -189,17 +191,17 @@ export default function LocationSelectionPage() {
                   </CardHeader>
                   <CardContent className="space-y-3 pb-6">
                     <div className="flex items-center gap-2 text-sm">
-                      <Maximize className="w-4 h-4 text-stone-500" />
-                      <span className="text-stone-600">ขนาดพื้นที่:</span>
-                      <span className="font-medium text-stone-900">{location.size}</span>
+                      <Maximize className="w-4 h-4 text-stone-500 dark:text-stone-400" />
+                      <span className="text-stone-600 dark:text-stone-400">ขนาดพื้นที่:</span>
+                      <span className="font-medium text-stone-900 dark:text-stone-50">{location.size}</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
-                      <span className="text-stone-600">ราคาเริ่มต้น:</span>
-                      <span className="font-medium text-stone-900">{location.price}</span>
+                      <span className="text-stone-600 dark:text-stone-400">ราคาเริ่มต้น:</span>
+                      <span className="font-medium text-stone-900 dark:text-stone-50">{location.price}</span>
                     </div>
                     <div className="flex flex-wrap gap-2 pt-2">
                       {location.features.map((feature, index) => (
-                        <Badge key={index} variant="secondary" className="bg-stone-100 text-stone-700">
+                        <Badge key={index} variant="secondary" className="bg-stone-100 dark:bg-stone-700 text-stone-700 dark:text-stone-300">
                           {feature}
                         </Badge>
                       ))}
@@ -211,9 +213,9 @@ export default function LocationSelectionPage() {
           </div>
 
           {/* Actions */}
-          <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-4 pt-6 border-t border-stone-200">
+          <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-4 pt-6 border-t border-stone-200 dark:border-stone-700">
             <Link href="/dashboard" className="w-full sm:w-auto">
-              <Button variant="ghost" className="w-full sm:w-auto text-stone-600">
+              <Button variant="ghost" className="w-full sm:w-auto text-stone-600 dark:text-stone-400">
                 <ChevronLeft className="w-4 h-4 mr-2" />
                 ยกเลิก
               </Button>

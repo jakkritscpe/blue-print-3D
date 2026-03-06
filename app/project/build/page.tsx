@@ -62,16 +62,16 @@ const StepProgress = ({ currentStep }: { currentStep: number }) => {
       <div className="flex items-center gap-2">
         {steps.map((s, index) => (
           <div key={s.step} className="flex items-center">
-            <div className={`flex flex-col items-center ${s.step === currentStep ? 'text-stone-900' : s.step < currentStep ? 'text-stone-600' : 'text-stone-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold ${s.step === currentStep ? 'bg-stone-800 text-white' :
-                s.step < currentStep ? 'bg-stone-600 text-white' :
-                  'bg-stone-200 text-stone-500'
+            <div className={`flex flex-col items-center ${s.step === currentStep ? 'text-stone-900 dark:text-stone-50' : s.step < currentStep ? 'text-stone-600 dark:text-stone-400' : 'text-stone-400 dark:text-stone-500'}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold ${s.step === currentStep ? 'bg-stone-800 dark:bg-stone-200 text-white dark:text-stone-900' :
+                s.step < currentStep ? 'bg-stone-600 dark:bg-stone-500 text-white' :
+                  'bg-stone-200 dark:bg-stone-700 text-stone-500 dark:text-stone-400'
                 }`}>
                 {s.step < currentStep ? <Check className="w-4 h-4" /> : s.step}
               </div>
             </div>
             {index < steps.length - 1 && (
-              <div className={`w-8 h-0.5 mx-2 ${s.step < currentStep ? 'bg-stone-600' : 'bg-stone-200'}`} />
+              <div className={`w-8 h-0.5 mx-2 ${s.step < currentStep ? 'bg-stone-600 dark:bg-stone-500' : 'bg-stone-200 dark:bg-stone-700'}`} />
             )}
           </div>
         ))}
@@ -248,8 +248,8 @@ export default function BuildPage() {
             </Button>
           </Link>
           <Link href="/" className="flex items-center gap-2">
-            <Box className="w-6 h-6 text-stone-800" />
-            <span className="text-base font-semibold text-stone-800 hidden md:block">BluePrint3D</span>
+            <Box className="w-6 h-6 text-stone-800 dark:text-stone-100" />
+            <span className="text-base font-semibold text-stone-800 dark:text-stone-100 hidden md:block">BluePrint3D</span>
           </Link>
           <Separator orientation="vertical" className="h-6 mx-1 sm:mx-2 hidden sm:block" />
           <div className="hidden sm:block">
@@ -318,23 +318,23 @@ export default function BuildPage() {
 
         {/* Left Sidebar - Components */}
         <aside
-          className={`bg-white border-r border-stone-200 flex flex-col shrink-0 absolute lg:static h-full z-50 transition-transform duration-300 ease-in-out w-72 lg:w-64 
+          className={`bg-white dark:bg-stone-900 border-r border-stone-200 dark:border-stone-800 flex flex-col shrink-0 absolute lg:static h-full z-50 transition-transform duration-300 ease-in-out w-72 lg:w-64
             ${isLeftPanelOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
         >
-          <div className="p-3 border-b border-stone-200 flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-stone-900">ส่วนประกอบบ้าน</h2>
+          <div className="p-3 border-b border-stone-200 dark:border-stone-800 flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-stone-900 dark:text-stone-50">ส่วนประกอบบ้าน</h2>
             <Button variant="ghost" size="icon" className="h-6 w-6 lg:hidden" onClick={() => setIsLeftPanelOpen(false)}>
               <X className="w-4 h-4" />
             </Button>
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
-            <TabsList className="flex flex-wrap h-auto bg-stone-50 p-1 gap-1 rounded-none">
+            <TabsList className="flex flex-wrap h-auto bg-stone-50 dark:bg-stone-950 p-1 gap-1 rounded-none">
               {Object.entries(componentCategories).map(([key, category]) => (
                 <TabsTrigger
                   key={key}
                   value={key}
-                  className="flex-1 min-w-[60px] h-auto py-2 px-1 data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                  className="flex-1 min-w-[60px] h-auto py-2 px-1 data-[state=active]:bg-white dark:data-[state=active]:bg-stone-800 data-[state=active]:shadow-sm"
                 >
                   <div className="flex flex-col items-center gap-1">
                     {category.icon}
@@ -355,13 +355,13 @@ export default function BuildPage() {
                         whileTap={{ scale: 0.98 }}
                       >
                         <Card
-                          className={`cursor-pointer border-stone-200 hover:border-stone-400 transition-colors ${selectedItems.includes(item.name) ? 'border-stone-800 bg-stone-50' : ''
+                          className={`cursor-pointer border-stone-200 dark:border-stone-700 hover:border-stone-400 dark:hover:border-stone-500 transition-colors ${selectedItems.includes(item.name) ? 'border-stone-800 dark:border-stone-200 bg-stone-50 dark:bg-stone-800' : ''
                             }`}
                           onClick={() => addItem(item.name, item.price)}
                         >
                           <CardContent className="p-3">
                             <div className="flex items-center justify-between">
-                              <span className="text-sm font-medium text-stone-900">{item.name}</span>
+                              <span className="text-sm font-medium text-stone-900 dark:text-stone-50">{item.name}</span>
                               {selectedItems.includes(item.name) && (
                                 <Check className="w-4 h-4 text-stone-800" />
                               )}
@@ -381,9 +381,9 @@ export default function BuildPage() {
         </aside>
 
         {/* Center - 3D Viewport */}
-        <main className="flex-1 relative bg-stone-200">
+        <main className="flex-1 relative bg-stone-200 dark:bg-stone-800">
           {/* 3D Toolbar */}
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 bg-white rounded-lg shadow-lg px-3 py-2">
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 bg-white dark:bg-stone-900 rounded-lg shadow-lg px-3 py-2">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -468,7 +468,7 @@ export default function BuildPage() {
               <Home className="w-4 h-4 mr-2" />
               มุมมองบ้าน
             </Button>
-            <Button variant="ghost" size="sm" className="bg-white/80 shadow-lg">
+            <Button variant="ghost" size="sm" className="bg-white/80 dark:bg-stone-900/80 shadow-lg">
               <Maximize className="w-4 h-4 mr-2" />
               มุมมองภายใน
             </Button>
@@ -487,7 +487,7 @@ export default function BuildPage() {
           <div className="absolute bottom-20 right-4 z-10 lg:hidden flex flex-col gap-2">
             <Button
               size="icon"
-              className="h-12 w-12 rounded-full shadow-xl bg-white text-stone-800 border-2 border-stone-200"
+              className="h-12 w-12 rounded-full shadow-xl bg-white dark:bg-stone-800 text-stone-800 dark:text-stone-100 border-2 border-stone-200 dark:border-stone-700"
               onClick={() => setIsRightPanelOpen(true)}
             >
               <Settings2 className="w-5 h-5" />
@@ -511,11 +511,11 @@ export default function BuildPage() {
 
         {/* Right Sidebar - Properties */}
         <aside
-          className={`bg-white border-l border-stone-200 flex flex-col shrink-0 absolute right-0 lg:static h-full z-50 transition-transform duration-300 ease-in-out w-80 lg:w-72 
+          className={`bg-white dark:bg-stone-900 border-l border-stone-200 dark:border-stone-800 flex flex-col shrink-0 absolute right-0 lg:static h-full z-50 transition-transform duration-300 ease-in-out w-80 lg:w-72
             ${isRightPanelOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'}`}
         >
           {/* Price Summary */}
-          <div className="p-4 border-b border-stone-200 bg-stone-50 relative">
+          <div className="p-4 border-b border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-950 relative">
             <Button
               variant="ghost"
               size="icon"
@@ -525,16 +525,16 @@ export default function BuildPage() {
               <X className="w-4 h-4" />
             </Button>
             <div className="flex items-center gap-2 mb-2 pr-6">
-              <DollarSign className="w-5 h-5 text-stone-600" />
-              <h3 className="font-semibold text-stone-900">ราคาประเมิน</h3>
+              <DollarSign className="w-5 h-5 text-stone-600 dark:text-stone-400" />
+              <h3 className="font-semibold text-stone-900 dark:text-stone-50">ราคาประเมิน</h3>
             </div>
-            <p className="text-3xl font-bold text-stone-900">฿{totalPrice.toLocaleString()}</p>
-            <p className="text-xs text-stone-500 mt-1">*ราคาโดยประมาณ อาจมีการเปลี่ยนแปลง</p>
+            <p className="text-3xl font-bold text-stone-900 dark:text-stone-50">฿{totalPrice.toLocaleString()}</p>
+            <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">*ราคาโดยประมาณ อาจมีการเปลี่ยนแปลง</p>
           </div>
 
           {/* Selected Items */}
-          <div className="p-3 border-b border-stone-200">
-            <h3 className="text-sm font-semibold text-stone-900 mb-3">รายการที่เลือก</h3>
+          <div className="p-3 border-b border-stone-200 dark:border-stone-800">
+            <h3 className="text-sm font-semibold text-stone-900 dark:text-stone-50 mb-3">รายการที่เลือก</h3>
             <ScrollArea className="h-40">
               <div className="space-y-2">
                 {selectedItems.length === 0 ? (
@@ -543,8 +543,8 @@ export default function BuildPage() {
                   </p>
                 ) : (
                   selectedItems.map((item, index) => (
-                    <div key={index} className="flex items-center justify-between p-2 bg-stone-50 rounded-lg">
-                      <span className="text-sm text-stone-700">{item}</span>
+                    <div key={index} className="flex items-center justify-between p-2 bg-stone-50 dark:bg-stone-800 rounded-lg">
+                      <span className="text-sm text-stone-700 dark:text-stone-300">{item}</span>
                       <Button
                         variant="ghost"
                         size="icon"
@@ -564,11 +564,11 @@ export default function BuildPage() {
 
           {/* Properties Panel */}
           <div className="flex-1 p-3">
-            <h3 className="text-sm font-semibold text-stone-900 mb-3">คุณสมบัติ</h3>
+            <h3 className="text-sm font-semibold text-stone-900 dark:text-stone-50 mb-3">คุณสมบัติ</h3>
             <div className="space-y-3">
               <div>
-                <label className="text-xs text-stone-500 mb-1 block">วัสดุ</label>
-                <select className="w-full text-sm border border-stone-300 rounded-lg px-3 py-2 bg-white">
+                <label className="text-xs text-stone-500 dark:text-stone-400 mb-1 block">วัสดุ</label>
+                <select className="w-full text-sm border border-stone-300 dark:border-stone-600 rounded-lg px-3 py-2 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-50">
                   <option>เลือกวัสดุ...</option>
                   <option>ปูนซีเมนต์</option>
                   <option>ไม้เนื้อแข็ง</option>
@@ -576,7 +576,7 @@ export default function BuildPage() {
                 </select>
               </div>
               <div>
-                <label className="text-xs text-stone-500 mb-1 block">สี</label>
+                <label className="text-xs text-stone-500 dark:text-stone-400 mb-1 block">สี</label>
                 <div className="flex gap-2">
                   {['#f5f5f4', '#e7e5e4', '#d6d3d1', '#a8a29e', '#78716c', '#44403c'].map((color) => (
                     <button
@@ -588,12 +588,12 @@ export default function BuildPage() {
                 </div>
               </div>
               <div>
-                <label className="text-xs text-stone-500 mb-1 block">ขนาด</label>
+                <label className="text-xs text-stone-500 dark:text-stone-400 mb-1 block">ขนาด</label>
                 <div className="flex items-center gap-2">
                   <Button variant="outline" size="icon" className="h-8 w-8">
                     <Minimize className="w-4 h-4" />
                   </Button>
-                  <span className="text-sm text-stone-700 flex-1 text-center">100%</span>
+                  <span className="text-sm text-stone-700 dark:text-stone-300 flex-1 text-center">100%</span>
                   <Button variant="outline" size="icon" className="h-8 w-8">
                     <Maximize className="w-4 h-4" />
                   </Button>
@@ -603,7 +603,7 @@ export default function BuildPage() {
           </div>
 
           {/* Actions */}
-          <div className="p-4 border-t border-stone-200 space-y-2">
+          <div className="p-4 border-t border-stone-200 dark:border-stone-800 space-y-2">
             <Button
               variant="outline"
               className="w-full"

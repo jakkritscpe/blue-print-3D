@@ -19,6 +19,7 @@ import {
   Download,
   Check
 } from 'lucide-react';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 // Step Progress Component
 const StepProgress = ({ currentStep }: { currentStep: number }) => {
@@ -33,17 +34,17 @@ const StepProgress = ({ currentStep }: { currentStep: number }) => {
       <div className="flex items-center gap-2 sm:gap-4">
         {steps.map((s, index) => (
           <div key={s.step} className="flex items-center">
-            <div className={`flex flex-col items-center ${s.step === currentStep ? 'text-stone-900' : s.step < currentStep ? 'text-stone-600' : 'text-stone-400'}`}>
-              <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-semibold ${s.step === currentStep ? 'bg-stone-800 text-white' :
-                  s.step < currentStep ? 'bg-stone-600 text-white' :
-                    'bg-stone-200 text-stone-500'
+            <div className={`flex flex-col items-center ${s.step === currentStep ? 'text-stone-900 dark:text-stone-50' : s.step < currentStep ? 'text-stone-600 dark:text-stone-400' : 'text-stone-400 dark:text-stone-500'}`}>
+              <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-semibold ${s.step === currentStep ? 'bg-stone-800 dark:bg-stone-200 text-white dark:text-stone-900' :
+                  s.step < currentStep ? 'bg-stone-600 dark:bg-stone-500 text-white' :
+                    'bg-stone-200 dark:bg-stone-700 text-stone-500 dark:text-stone-400'
                 }`}>
                 {s.step < currentStep ? <Check className="w-4 h-4 sm:w-5 sm:h-5" /> : s.step}
               </div>
               <span className="text-[10px] sm:text-xs mt-1 sm:mt-2 font-medium">{s.label}</span>
             </div>
             {index < steps.length - 1 && (
-              <div className={`w-8 sm:w-16 h-0.5 mx-2 sm:mx-4 ${s.step < currentStep ? 'bg-stone-600' : 'bg-stone-200'}`} />
+              <div className={`w-8 sm:w-16 h-0.5 mx-2 sm:mx-4 ${s.step < currentStep ? 'bg-stone-600 dark:bg-stone-500' : 'bg-stone-200 dark:bg-stone-700'}`} />
             )}
           </div>
         ))}
@@ -73,19 +74,20 @@ export default function DonePage() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-stone-50 dark:bg-stone-950">
       {/* Header */}
-      <header className="bg-white border-b border-stone-200 sticky top-0 z-50">
+      <header className="bg-white dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
               <Link href="/dashboard" className="flex items-center gap-2">
-                <Box className="w-7 h-7 text-stone-800" />
-                <span className="text-lg font-semibold text-stone-800">BluePrint3D</span>
+                <Box className="w-7 h-7 text-stone-800 dark:text-stone-100" />
+                <span className="text-lg font-semibold text-stone-800 dark:text-stone-100">BluePrint3D</span>
               </Link>
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-sm text-stone-600">ขั้นตอนที่ 3 จาก 3</span>
+              <span className="text-sm text-stone-600 dark:text-stone-400">ขั้นตอนที่ 3 จาก 3</span>
+              <ThemeToggle />
             </div>
           </div>
         </div>
@@ -108,42 +110,42 @@ export default function DonePage() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           {/* Success Card */}
-          <Card className="border-stone-200 mb-8">
+          <Card className="border-stone-200 dark:border-stone-700 mb-8">
             <CardContent className="pt-12 pb-12 text-center">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle className="w-10 h-10 text-green-600" />
+              <div className="w-20 h-20 bg-green-100 dark:bg-green-950 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-400" />
               </div>
-              <h1 className="text-3xl font-bold text-stone-900 mb-4">
+              <h1 className="text-3xl font-bold text-stone-900 dark:text-stone-50 mb-4">
                 ระบบได้รับข้อมูลแล้ว
               </h1>
-              <p className="text-lg text-stone-600 max-w-2xl mx-auto mb-6">
-                กรุณารอการติดต่อกลับภายใน <span className="font-semibold text-stone-900">1-3 วันทำการ</span>
+              <p className="text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto mb-6">
+                กรุณารอการติดต่อกลับภายใน <span className="font-semibold text-stone-900 dark:text-stone-50">1-3 วันทำการ</span>
                 <br />
                 ทีมงานจะตรวจสอบแบบและส่งใบเสนอราคาอย่างละเอียดให้คุณ
               </p>
 
               <div className="flex items-center justify-center gap-2 mb-8">
-                <Badge variant="outline" className="border-amber-200 text-amber-700 bg-amber-50 px-4 py-2">
+                <Badge variant="outline" className="border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950 px-4 py-2">
                   <Clock className="w-4 h-4 mr-2" />
                   สถานะ: รอติดต่อกลับ
                 </Badge>
               </div>
 
               {/* Reference Number */}
-              <div className="bg-stone-100 rounded-xl p-6 max-w-md mx-auto">
-                <p className="text-sm text-stone-600 mb-2">เลขอ้างอิงโปรเจกต์</p>
+              <div className="bg-stone-100 dark:bg-stone-800 rounded-xl p-6 max-w-md mx-auto">
+                <p className="text-sm text-stone-600 dark:text-stone-400 mb-2">เลขอ้างอิงโปรเจกต์</p>
                 <div className="flex items-center justify-center gap-3">
-                  <span className="text-2xl font-mono font-bold text-stone-900">{projectRef}</span>
+                  <span className="text-2xl font-mono font-bold text-stone-900 dark:text-stone-50">{projectRef}</span>
                   <Button
                     variant="ghost"
                     size="icon"
                     className="h-8 w-8"
                     onClick={() => copyToClipboard(projectRef)}
                   >
-                    <Copy className="w-4 h-4 text-stone-600" />
+                    <Copy className="w-4 h-4 text-stone-600 dark:text-stone-400" />
                   </Button>
                 </div>
-                <p className="text-xs text-stone-500 mt-2">บันทึกเลขอ้างอิงนี้ไว้เพื่อติดตามสถานะ</p>
+                <p className="text-xs text-stone-500 dark:text-stone-400 mt-2">บันทึกเลขอ้างอิงนี้ไว้เพื่อติดตามสถานะ</p>
               </div>
             </CardContent>
           </Card>
@@ -151,52 +153,52 @@ export default function DonePage() {
           {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {/* Price Summary */}
-            <Card className="border-stone-200">
+            <Card className="border-stone-200 dark:border-stone-700">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <DollarSign className="w-5 h-5 text-stone-600" />
+                <CardTitle className="flex items-center gap-2 text-lg text-stone-900 dark:text-stone-50">
+                  <DollarSign className="w-5 h-5 text-stone-600 dark:text-stone-400" />
                   ราคาประเมิน
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-4xl font-bold text-stone-900 mb-2">
+                <p className="text-4xl font-bold text-stone-900 dark:text-stone-50 mb-2">
                   ฿{estimatedPrice.toLocaleString()}
                 </p>
-                <p className="text-sm text-stone-500">
+                <p className="text-sm text-stone-500 dark:text-stone-400">
                   *ราคาโดยประมาณ อาจมีการเปลี่ยนแปลงตามเงื่อนไขจริง
                 </p>
                 <Separator className="my-4" />
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-stone-600">ค่าวัสดุก่อสร้าง</span>
-                    <span className="text-stone-900">฿{(estimatedPrice * 0.6).toLocaleString()}</span>
+                    <span className="text-stone-600 dark:text-stone-400">ค่าวัสดุก่อสร้าง</span>
+                    <span className="text-stone-900 dark:text-stone-50">฿{(estimatedPrice * 0.6).toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-stone-600">ค่าแรง</span>
-                    <span className="text-stone-900">฿{(estimatedPrice * 0.3).toLocaleString()}</span>
+                    <span className="text-stone-600 dark:text-stone-400">ค่าแรง</span>
+                    <span className="text-stone-900 dark:text-stone-50">฿{(estimatedPrice * 0.3).toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-stone-600">ค่าอื่นๆ</span>
-                    <span className="text-stone-900">฿{(estimatedPrice * 0.1).toLocaleString()}</span>
+                    <span className="text-stone-600 dark:text-stone-400">ค่าอื่นๆ</span>
+                    <span className="text-stone-900 dark:text-stone-50">฿{(estimatedPrice * 0.1).toLocaleString()}</span>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             {/* Selected Items */}
-            <Card className="border-stone-200">
+            <Card className="border-stone-200 dark:border-stone-700">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <FileText className="w-5 h-5 text-stone-600" />
+                <CardTitle className="flex items-center gap-2 text-lg text-stone-900 dark:text-stone-50">
+                  <FileText className="w-5 h-5 text-stone-600 dark:text-stone-400" />
                   รายการที่เลือก
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2 max-h-64 overflow-y-auto">
                   {selectedItems.map((item, index) => (
-                    <div key={index} className="flex items-center justify-between py-2 border-b border-stone-100 last:border-0">
-                      <span className="text-sm text-stone-700">{item.name}</span>
-                      <span className="text-sm font-medium text-stone-900">฿{item.price.toLocaleString()}</span>
+                    <div key={index} className="flex items-center justify-between py-2 border-b border-stone-100 dark:border-stone-700 last:border-0">
+                      <span className="text-sm text-stone-700 dark:text-stone-300">{item.name}</span>
+                      <span className="text-sm font-medium text-stone-900 dark:text-stone-50">฿{item.price.toLocaleString()}</span>
                     </div>
                   ))}
                 </div>
@@ -205,39 +207,27 @@ export default function DonePage() {
           </div>
 
           {/* Next Steps */}
-          <Card className="border-stone-200 mb-8">
+          <Card className="border-stone-200 dark:border-stone-700 mb-8">
             <CardHeader>
-              <CardTitle className="text-lg">ขั้นตอนต่อไป</CardTitle>
+              <CardTitle className="text-lg text-stone-900 dark:text-stone-50">ขั้นตอนต่อไป</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-stone-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-sm font-semibold text-stone-700">1</span>
+                {[
+                  { title: 'ตรวจสอบแบบโดยสถาปนิก', desc: 'ทีมสถาปนิกจะตรวจสอบความเป็นไปได้ของแบบบ้าน' },
+                  { title: 'ประเมินราคาละเอียด', desc: 'รับใบเสนอราคาอย่างละเอียดภายใน 3 วันทำการ' },
+                  { title: 'นัดหมายพบทีมงาน', desc: 'พบทีมงานเพื่อปรับแก้แบบและเซ็นสัญญา' }
+                ].map((item, index) => (
+                  <div key={index} className="flex items-start gap-4">
+                    <div className="w-8 h-8 bg-stone-100 dark:bg-stone-800 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-sm font-semibold text-stone-700 dark:text-stone-300">{index + 1}</span>
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-stone-900 dark:text-stone-50">{item.title}</h3>
+                      <p className="text-sm text-stone-600 dark:text-stone-400">{item.desc}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-medium text-stone-900">ตรวจสอบแบบโดยสถาปนิก</h3>
-                    <p className="text-sm text-stone-600">ทีมสถาปนิกจะตรวจสอบความเป็นไปได้ของแบบบ้าน</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-stone-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-sm font-semibold text-stone-700">2</span>
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-stone-900">ประเมินราคาละเอียด</h3>
-                    <p className="text-sm text-stone-600">รับใบเสนอราคาอย่างละเอียดภายใน 3 วันทำการ</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-stone-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-sm font-semibold text-stone-700">3</span>
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-stone-900">นัดหมายพบทีมงาน</h3>
-                    <p className="text-sm text-stone-600">พบทีมงานเพื่อปรับแก้แบบและเซ็นสัญญา</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </CardContent>
           </Card>
@@ -245,16 +235,16 @@ export default function DonePage() {
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/dashboard" className="w-full sm:w-auto">
-              <Button variant="outline" className="border-stone-300 w-full">
+              <Button variant="outline" className="border-stone-300 dark:border-stone-600 w-full">
                 <Home className="w-4 h-4 mr-2" />
                 กลับไปที่แดชบอร์ด
               </Button>
             </Link>
-            <Button variant="outline" className="border-stone-300 w-full sm:w-auto">
+            <Button variant="outline" className="border-stone-300 dark:border-stone-600 w-full sm:w-auto">
               <Download className="w-4 h-4 mr-2" />
               ดาวน์โหลดใบเสนอราคา
             </Button>
-            <Button variant="outline" className="border-stone-300 w-full sm:w-auto">
+            <Button variant="outline" className="border-stone-300 dark:border-stone-600 w-full sm:w-auto">
               <Share2 className="w-4 h-4 mr-2" />
               แชร์โปรเจกต์
             </Button>
