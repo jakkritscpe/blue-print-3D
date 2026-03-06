@@ -83,8 +83,8 @@ const StepProgress = ({ currentStep }: { currentStep: number }) => {
           <div key={s.step} className="flex items-center">
             <div className={`flex flex-col items-center ${s.step === currentStep ? 'text-stone-900' : s.step < currentStep ? 'text-stone-600' : 'text-stone-400'}`}>
               <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-semibold ${s.step === currentStep ? 'bg-stone-800 text-white' :
-                  s.step < currentStep ? 'bg-stone-600 text-white' :
-                    'bg-stone-200 text-stone-500'
+                s.step < currentStep ? 'bg-stone-600 text-white' :
+                  'bg-stone-200 text-stone-500'
                 }`}>
                 {s.step < currentStep ? <Check className="w-4 h-4 sm:w-5 sm:h-5" /> : s.step}
               </div>
@@ -159,21 +159,21 @@ export default function LocationSelectionPage() {
                 transition={{ duration: 0.2 }}
               >
                 <Card
-                  className={`border-2 cursor-pointer transition-all h-full ${selectedLocation === location.id
-                      ? 'border-stone-800 shadow-lg'
-                      : 'border-stone-100 hover:border-stone-300'
+                  className={`border-2 cursor-pointer transition-all h-full overflow-hidden p-0 gap-0 flex flex-col ${selectedLocation === location.id
+                    ? 'border-stone-800 shadow-lg'
+                    : 'border-stone-100 hover:border-stone-300'
                     }`}
                   onClick={() => setSelectedLocation(location.id)}
                 >
-                  <div className="relative h-48 rounded-t-lg overflow-hidden">
+                  <div className="relative h-48 sm:h-52 w-full bg-stone-100 flex-shrink-0">
                     <Image
                       src={location.image}
                       alt={location.name}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform hover:scale-105 duration-500"
                     />
                   </div>
-                  <CardHeader className="pb-3">
+                  <CardHeader className="pt-6 pb-3">
                     <div className="flex items-start justify-between">
                       <CardTitle className="text-lg text-stone-900">{location.name}</CardTitle>
                       {selectedLocation === location.id && (
@@ -187,7 +187,7 @@ export default function LocationSelectionPage() {
                       {location.address}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="space-y-3">
+                  <CardContent className="space-y-3 pb-6">
                     <div className="flex items-center gap-2 text-sm">
                       <Maximize className="w-4 h-4 text-stone-500" />
                       <span className="text-stone-600">ขนาดพื้นที่:</span>
