@@ -240,7 +240,7 @@ export default function BuildPage() {
   return (
     <AuroraBackground className="h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-white/80 dark:bg-stone-900/80 backdrop-blur-md border-b border-stone-200 dark:border-stone-800 h-14 flex items-center justify-between px-2 sm:px-4 shrink-0 z-50">
+      <header className="bg-white/75 dark:bg-[#0C1F3F]/75 backdrop-blur-xl border-b border-white/40 dark:border-white/10 h-14 flex items-center justify-between px-2 sm:px-4 shrink-0 z-50">
         <div className="flex items-center gap-2 sm:gap-4">
           <Link href="/dashboard">
             <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -248,8 +248,8 @@ export default function BuildPage() {
             </Button>
           </Link>
           <Link href="/" className="flex items-center gap-2">
-            <Box className="w-6 h-6 text-stone-800 dark:text-stone-100" />
-            <span className="text-base font-semibold text-stone-800 dark:text-stone-100 hidden md:block">BluePrint3D</span>
+            <Box className="w-6 h-6 text-[#0B3C5D] dark:text-blue-300" />
+            <span className="text-base font-semibold text-[#0B3C5D] dark:text-blue-100 hidden md:block">BluePrint3D</span>
           </Link>
           <Separator orientation="vertical" className="h-6 mx-1 sm:mx-2 hidden sm:block" />
           <div className="hidden sm:block">
@@ -293,7 +293,7 @@ export default function BuildPage() {
             {saved ? 'บันทึกแล้ว' : 'บันทึก'}
           </Button>
 
-          <Button size="sm" onClick={handleSubmit} className="bg-stone-800 hover:bg-stone-700 text-white h-8 px-2 sm:px-3">
+          <Button size="sm" onClick={handleSubmit} className="bg-[#0B3C5D] hover:bg-[#0d4a72] dark:bg-[#1F77B4] dark:hover:bg-[#1868a0] text-white h-8 px-2 sm:px-3 shadow-md shadow-[#0B3C5D]/20">
             <Send className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-2" />
             <span className="hidden sm:inline">ส่งแบบ</span>
           </Button>
@@ -318,23 +318,23 @@ export default function BuildPage() {
 
         {/* Left Sidebar - Components */}
         <aside
-          className={`bg-white dark:bg-stone-900 border-r border-stone-200 dark:border-stone-800 flex flex-col shrink-0 absolute lg:static h-full z-50 transition-transform duration-300 ease-in-out w-72 lg:w-64
+          className={`bg-white/75 dark:bg-[#0C1F3F]/80 backdrop-blur-xl border-r border-white/40 dark:border-white/10 flex flex-col shrink-0 absolute lg:static h-full z-50 transition-transform duration-300 ease-in-out w-72 lg:w-64
             ${isLeftPanelOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
         >
-          <div className="p-3 border-b border-stone-200 dark:border-stone-800 flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-stone-900 dark:text-stone-50">ส่วนประกอบบ้าน</h2>
+          <div className="p-3 border-b border-white/35 dark:border-white/10 flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-[#0B2454] dark:text-blue-50">ส่วนประกอบบ้าน</h2>
             <Button variant="ghost" size="icon" className="h-6 w-6 lg:hidden" onClick={() => setIsLeftPanelOpen(false)}>
               <X className="w-4 h-4" />
             </Button>
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
-            <TabsList className="flex flex-wrap h-auto bg-stone-50 dark:bg-stone-950 p-1 gap-1 rounded-none">
+            <TabsList className="flex flex-wrap h-auto bg-white/40 dark:bg-white/8 backdrop-blur-sm p-1 gap-1 rounded-none border-b border-white/30 dark:border-white/8">
               {Object.entries(componentCategories).map(([key, category]) => (
                 <TabsTrigger
                   key={key}
                   value={key}
-                  className="flex-1 min-w-[60px] h-auto py-2 px-1 data-[state=active]:bg-white dark:data-[state=active]:bg-stone-800 data-[state=active]:shadow-sm"
+                  className="flex-1 min-w-[60px] h-auto py-2 px-1 data-[state=active]:bg-white/80 dark:data-[state=active]:bg-white/15 data-[state=active]:text-[#0B3C5D] dark:data-[state=active]:text-blue-100 data-[state=active]:shadow-sm"
                 >
                   <div className="flex flex-col items-center gap-1">
                     {category.icon}
@@ -355,18 +355,20 @@ export default function BuildPage() {
                         whileTap={{ scale: 0.98 }}
                       >
                         <Card
-                          className={`cursor-pointer border-stone-200 dark:border-stone-700 hover:border-stone-400 dark:hover:border-stone-500 transition-colors ${selectedItems.includes(item.name) ? 'border-stone-800 dark:border-stone-200 bg-stone-50 dark:bg-stone-800' : ''
-                            }`}
+                          className={`cursor-pointer backdrop-blur-sm transition-all ${selectedItems.includes(item.name)
+                            ? 'bg-blue-50/80 dark:bg-blue-900/30 border-[#1F77B4]/50 dark:border-blue-400/40 shadow-sm'
+                            : 'bg-white/60 dark:bg-white/8 border-white/50 dark:border-white/12 hover:bg-white/80 dark:hover:bg-white/12 hover:border-white/60 dark:hover:border-white/20'
+                          }`}
                           onClick={() => addItem(item.name, item.price)}
                         >
                           <CardContent className="p-3">
                             <div className="flex items-center justify-between">
-                              <span className="text-sm font-medium text-stone-900 dark:text-stone-50">{item.name}</span>
+                              <span className="text-sm font-medium text-[#0B2454] dark:text-blue-50">{item.name}</span>
                               {selectedItems.includes(item.name) && (
-                                <Check className="w-4 h-4 text-stone-800" />
+                                <Check className="w-4 h-4 text-[#1F77B4] dark:text-blue-300" />
                               )}
                             </div>
-                            <p className="text-xs text-stone-500 mt-1">
+                            <p className="text-xs text-[#0B3C5D]/50 dark:text-blue-400/60 mt-1">
                               ฿{item.price.toLocaleString()}
                             </p>
                           </CardContent>
@@ -383,7 +385,7 @@ export default function BuildPage() {
         {/* Center - 3D Viewport */}
         <main className="flex-1 relative bg-stone-200 dark:bg-stone-800">
           {/* 3D Toolbar */}
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 bg-white dark:bg-stone-900 rounded-lg shadow-lg px-3 py-2">
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 bg-white/80 dark:bg-[#0C1F3F]/80 backdrop-blur-md rounded-lg shadow-lg shadow-blue-200/20 dark:shadow-black/30 border border-white/50 dark:border-white/12 px-3 py-2">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -511,11 +513,11 @@ export default function BuildPage() {
 
         {/* Right Sidebar - Properties */}
         <aside
-          className={`bg-white dark:bg-stone-900 border-l border-stone-200 dark:border-stone-800 flex flex-col shrink-0 absolute right-0 lg:static h-full z-50 transition-transform duration-300 ease-in-out w-80 lg:w-72
+          className={`bg-white/75 dark:bg-[#0C1F3F]/80 backdrop-blur-xl border-l border-white/40 dark:border-white/10 flex flex-col shrink-0 absolute right-0 lg:static h-full z-50 transition-transform duration-300 ease-in-out w-80 lg:w-72
             ${isRightPanelOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'}`}
         >
           {/* Price Summary */}
-          <div className="p-4 border-b border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-950 relative">
+          <div className="p-4 border-b border-white/35 dark:border-white/10 bg-blue-50/40 dark:bg-blue-900/15 relative">
             <Button
               variant="ghost"
               size="icon"
@@ -525,26 +527,26 @@ export default function BuildPage() {
               <X className="w-4 h-4" />
             </Button>
             <div className="flex items-center gap-2 mb-2 pr-6">
-              <DollarSign className="w-5 h-5 text-stone-600 dark:text-stone-400" />
-              <h3 className="font-semibold text-stone-900 dark:text-stone-50">ราคาประเมิน</h3>
+              <DollarSign className="w-5 h-5 text-[#1F77B4] dark:text-blue-300" />
+              <h3 className="font-semibold text-[#0B2454] dark:text-blue-50">ราคาประเมิน</h3>
             </div>
-            <p className="text-3xl font-bold text-stone-900 dark:text-stone-50">฿{totalPrice.toLocaleString()}</p>
-            <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">*ราคาโดยประมาณ อาจมีการเปลี่ยนแปลง</p>
+            <p className="text-3xl font-bold text-[#0B2454] dark:text-blue-50">฿{totalPrice.toLocaleString()}</p>
+            <p className="text-xs text-[#0B3C5D]/50 dark:text-blue-400/60 mt-1">*ราคาโดยประมาณ อาจมีการเปลี่ยนแปลง</p>
           </div>
 
           {/* Selected Items */}
-          <div className="p-3 border-b border-stone-200 dark:border-stone-800">
-            <h3 className="text-sm font-semibold text-stone-900 dark:text-stone-50 mb-3">รายการที่เลือก</h3>
+          <div className="p-3 border-b border-white/35 dark:border-white/10">
+            <h3 className="text-sm font-semibold text-[#0B2454] dark:text-blue-50 mb-3">รายการที่เลือก</h3>
             <ScrollArea className="h-40">
               <div className="space-y-2">
                 {selectedItems.length === 0 ? (
-                  <p className="text-sm text-stone-500 text-center py-4">
+                  <p className="text-sm text-[#0B3C5D]/50 dark:text-blue-400/60 text-center py-4">
                     ยังไม่มีรายการที่เลือก
                   </p>
                 ) : (
                   selectedItems.map((item, index) => (
-                    <div key={index} className="flex items-center justify-between p-2 bg-stone-50 dark:bg-stone-800 rounded-lg">
-                      <span className="text-sm text-stone-700 dark:text-stone-300">{item}</span>
+                    <div key={index} className="flex items-center justify-between p-2 bg-blue-50/50 dark:bg-blue-900/20 rounded-lg border border-white/40 dark:border-white/8">
+                      <span className="text-sm text-[#0B3C5D] dark:text-blue-200">{item}</span>
                       <Button
                         variant="ghost"
                         size="icon"
@@ -564,11 +566,11 @@ export default function BuildPage() {
 
           {/* Properties Panel */}
           <div className="flex-1 p-3">
-            <h3 className="text-sm font-semibold text-stone-900 dark:text-stone-50 mb-3">คุณสมบัติ</h3>
+            <h3 className="text-sm font-semibold text-[#0B2454] dark:text-blue-50 mb-3">คุณสมบัติ</h3>
             <div className="space-y-3">
               <div>
-                <label className="text-xs text-stone-500 dark:text-stone-400 mb-1 block">วัสดุ</label>
-                <select className="w-full text-sm border border-stone-300 dark:border-stone-600 rounded-lg px-3 py-2 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-50">
+                <label className="text-xs text-[#0B3C5D]/50 dark:text-blue-400/60 mb-1 block">วัสดุ</label>
+                <select className="w-full text-sm border border-white/50 dark:border-white/15 rounded-lg px-3 py-2 bg-white/60 dark:bg-white/8 text-[#0B2454] dark:text-blue-50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-[#1F77B4]/30 dark:focus:ring-blue-400/30">
                   <option>เลือกวัสดุ...</option>
                   <option>ปูนซีเมนต์</option>
                   <option>ไม้เนื้อแข็ง</option>
@@ -576,7 +578,7 @@ export default function BuildPage() {
                 </select>
               </div>
               <div>
-                <label className="text-xs text-stone-500 dark:text-stone-400 mb-1 block">สี</label>
+                <label className="text-xs text-[#0B3C5D]/50 dark:text-blue-400/60 mb-1 block">สี</label>
                 <div className="flex gap-2">
                   {['#f5f5f4', '#e7e5e4', '#d6d3d1', '#a8a29e', '#78716c', '#44403c'].map((color) => (
                     <button
@@ -588,12 +590,12 @@ export default function BuildPage() {
                 </div>
               </div>
               <div>
-                <label className="text-xs text-stone-500 dark:text-stone-400 mb-1 block">ขนาด</label>
+                <label className="text-xs text-[#0B3C5D]/50 dark:text-blue-400/60 mb-1 block">ขนาด</label>
                 <div className="flex items-center gap-2">
                   <Button variant="outline" size="icon" className="h-8 w-8">
                     <Minimize className="w-4 h-4" />
                   </Button>
-                  <span className="text-sm text-stone-700 dark:text-stone-300 flex-1 text-center">100%</span>
+                  <span className="text-sm text-[#0B3C5D] dark:text-blue-200 flex-1 text-center">100%</span>
                   <Button variant="outline" size="icon" className="h-8 w-8">
                     <Maximize className="w-4 h-4" />
                   </Button>
@@ -603,17 +605,17 @@ export default function BuildPage() {
           </div>
 
           {/* Actions */}
-          <div className="p-4 border-t border-stone-200 dark:border-stone-800 space-y-2">
+          <div className="p-4 border-t border-white/35 dark:border-white/10 space-y-2">
             <Button
               variant="outline"
-              className="w-full"
+              className="w-full bg-white/50 dark:bg-white/8 border-white/50 dark:border-white/15 text-[#0B3C5D] dark:text-blue-200"
               onClick={() => router.push('/project/location')}
             >
               <ChevronLeft className="w-4 h-4 mr-2" />
               ย้อนกลับ
             </Button>
             <Button
-              className="w-full bg-stone-800 hover:bg-stone-700 text-white"
+              className="w-full bg-[#0B3C5D] hover:bg-[#0d4a72] dark:bg-[#1F77B4] dark:hover:bg-[#1868a0] text-white shadow-md shadow-[#0B3C5D]/20"
               onClick={handleSubmit}
             >
               ถัดไป
