@@ -1,15 +1,7 @@
 /**
  * HeroSection — Server Component, zero JavaScript.
  *
- * Previous version: 'use client' + framer-motion motion.div wrappers.
- * The entire hero waited for the JS bundle to parse before animating.
- *
- * New version: pure HTML + CSS animations.
- * - `animate-fade-in-up` / `animate-fade-in-scale` start the instant
- *   the browser paints the first frame — before any JS executes.
- * - Floating badges use `animate-float-up` / `animate-float-down` CSS keyframes.
- * - `Highlight` uses `animate-expand-bg` CSS keyframe (no framer-motion).
- * - No 'use client', no hydration cost, no framer-motion import.
+ * Pure HTML + CSS animations, Blueprint Tech palette.
  */
 
 import { Button } from "@/components/ui/button";
@@ -26,19 +18,19 @@ export function HeroSection() {
 
         {/* Text column — fades in upward */}
         <div className="animate-fade-in-up text-center lg:text-left z-10">
-          <Badge className="mb-6 bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 border-0">
+          <Badge className="mb-6 bg-accent/15 text-bp-navy dark:text-bp-cyan border-0">
             แพลตฟอร์มออกแบบบ้าน 3D อันดับ 1
           </Badge>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-stone-900 dark:text-white leading-tight mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight mb-6">
             ออกแบบบ้านในฝัน
             <br />
-            <Highlight className="text-stone-900 dark:text-white mt-2">
+            <Highlight className="text-foreground mt-2">
               ด้วยตัวคุณเอง
             </Highlight>
           </h1>
 
-          <p className="text-base sm:text-lg md:text-xl text-stone-600 dark:text-stone-300 mb-8 max-w-lg mx-auto lg:mx-0">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 max-w-lg mx-auto lg:mx-0">
             สร้างแบบบ้าน 3D ที่สวยงามและเป็นไปได้จริง พร้อมประเมินราคาและคำปรึกษาจากทีมงานมืออาชีพ ทันสมัย ใช้งานง่าย
           </p>
 
@@ -46,7 +38,7 @@ export function HeroSection() {
             <Link href="/register" className="w-full sm:w-auto">
               <Button
                 size="lg"
-                className="w-full sm:w-auto bg-stone-800 hover:bg-stone-700 dark:bg-stone-200 dark:text-stone-900 dark:hover:bg-white text-white px-8 h-12 lg:h-14 lg:text-lg rounded-xl"
+                className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 h-12 lg:h-14 lg:text-lg rounded-xl"
               >
                 เริ่มออกแบบฟรี
                 <ChevronRight className="w-5 h-5 ml-2" />
@@ -56,7 +48,7 @@ export function HeroSection() {
               <Button
                 size="lg"
                 variant="outline"
-                className="w-full sm:w-auto border-stone-300 dark:border-stone-700 h-12 lg:h-14 lg:text-lg bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm rounded-xl"
+                className="w-full sm:w-auto border-border h-12 lg:h-14 lg:text-lg bg-card/50 backdrop-blur-sm rounded-xl"
               >
                 <Eye className="w-5 h-5 mr-2" />
                 ดูตัวอย่าง
@@ -67,12 +59,7 @@ export function HeroSection() {
 
         {/* Image column — fades in with slight scale */}
         <div className="animate-fade-in-scale relative z-10 mt-8 lg:mt-0">
-          <div className="relative bg-gradient-to-br from-stone-100 to-stone-200 dark:from-stone-800 dark:to-stone-900 rounded-[2rem] p-2 sm:p-4 aspect-square max-w-[500px] lg:max-w-none mx-auto w-full overflow-hidden shadow-2xl border border-white/20 dark:border-stone-700/50">
-            {/*
-             * priority — LCP element, preloaded immediately.
-             * sizes    — tells Next.js which srcset variant to serve per breakpoint.
-             *            Without this, it defaults to 100vw and always serves 1920px.
-             */}
+          <div className="relative bg-gradient-to-br from-bp-bg to-bp-blue/20 dark:from-secondary dark:to-card rounded-[2rem] p-2 sm:p-4 aspect-square max-w-[500px] lg:max-w-none mx-auto w-full overflow-hidden shadow-2xl border border-bp-blue/20 dark:border-border/50">
             <Image
               src="/images/hero/hero-3d.jpg"
               alt="3D House Design Preview"
@@ -82,19 +69,19 @@ export function HeroSection() {
               priority
             />
 
-            {/* CSS float animations — zero JS, GPU-composited transform */}
+            {/* CSS float animations */}
             <div
               aria-hidden="true"
-              className="animate-float-up absolute top-8 right-8 bg-white/90 dark:bg-stone-900/90 backdrop-blur-sm rounded-2xl p-4 shadow-xl border border-stone-100 dark:border-stone-800"
+              className="animate-float-up absolute top-8 right-8 bg-card/90 backdrop-blur-sm rounded-2xl p-4 shadow-xl border border-border"
             >
-              <Home className="w-6 h-6 text-stone-700 dark:text-stone-300" />
+              <Home className="w-6 h-6 text-primary dark:text-accent" />
             </div>
 
             <div
               aria-hidden="true"
-              className="animate-float-down absolute bottom-12 left-8 bg-white/90 dark:bg-stone-900/90 backdrop-blur-sm rounded-2xl p-4 shadow-xl border border-stone-100 dark:border-stone-800"
+              className="animate-float-down absolute bottom-12 left-8 bg-card/90 backdrop-blur-sm rounded-2xl p-4 shadow-xl border border-border"
             >
-              <Layers className="w-6 h-6 text-stone-700 dark:text-stone-300" />
+              <Layers className="w-6 h-6 text-primary dark:text-accent" />
             </div>
           </div>
         </div>

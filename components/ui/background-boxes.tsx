@@ -21,7 +21,7 @@ export const BackgroundBoxes = ({
   return (
     <div
       className={cn(
-        "relative min-h-[40rem] flex items-center justify-center w-full overflow-hidden bg-stone-50 dark:bg-stone-950",
+        "relative min-h-[40rem] flex items-center justify-center w-full overflow-hidden bg-background",
         containerClassName
       )}
     >
@@ -35,7 +35,7 @@ export const BackgroundBoxes = ({
           {rows.map((_, i) => (
             <motion.div
               key={`row` + i}
-              className="w-16 h-8 sm:w-20 sm:h-10 border-l border-stone-200 dark:border-stone-800 relative shadow-[0_0_1px_rgba(0,0,0,0.1)] dark:shadow-[0_0_1px_rgba(255,255,255,0.05)]"
+              className="w-16 h-8 sm:w-20 sm:h-10 border-l border-border relative shadow-[0_0_1px_rgba(0,0,0,0.1)] dark:shadow-[0_0_1px_rgba(255,255,255,0.05)]"
             >
               {cols.map((_, j) => (
                 <motion.div
@@ -44,7 +44,7 @@ export const BackgroundBoxes = ({
                     transition: { duration: 2 },
                   }}
                   key={`col` + j}
-                  className="w-16 h-8 sm:w-20 sm:h-10 border-r border-t border-stone-200 dark:border-stone-800 relative"
+                  className="w-16 h-8 sm:w-20 sm:h-10 border-r border-t border-border relative"
                 >
                   {/* Random subtle highlights */}
                   {j % 8 === 0 && i % 4 === 0 ? (
@@ -60,7 +60,7 @@ export const BackgroundBoxes = ({
                         ease: "easeInOut",
                         delay: (i + j) * 0.1,
                       }}
-                      className="absolute inset-0 bg-stone-300/30 dark:bg-stone-700/20 rounded-[2px]"
+                      className="absolute inset-0 bg-bp-blue/15 dark:bg-bp-cyan/10 rounded-[2px]"
                     />
                   ) : null}
                   {j % 5 === 0 && i % 7 === 0 ? (
@@ -75,7 +75,7 @@ export const BackgroundBoxes = ({
                         ease: "linear",
                         delay: (i * j) % 5,
                       }}
-                      className="absolute inset-0 bg-stone-200/40 dark:bg-stone-800/30 rounded-[2px]"
+                      className="absolute inset-0 bg-bp-bg/40 dark:bg-bp-navy/20 rounded-[2px]"
                     />
                   ) : null}
                 </motion.div>
@@ -86,7 +86,7 @@ export const BackgroundBoxes = ({
       </div>
       
       {/* Subtle overlay gradient to blend bottom */}
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-stone-50 via-stone-50/80 to-transparent dark:from-stone-950 dark:via-stone-950/80 pointer-events-none z-10" />
+      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none z-10" />
 
       <div className="relative z-20 w-full">{children}</div>
     </div>

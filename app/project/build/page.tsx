@@ -62,16 +62,21 @@ const StepProgress = ({ currentStep }: { currentStep: number }) => {
       <div className="flex items-center gap-2">
         {steps.map((s, index) => (
           <div key={s.step} className="flex items-center">
-            <div className={`flex flex-col items-center ${s.step === currentStep ? 'text-stone-900' : s.step < currentStep ? 'text-stone-600' : 'text-stone-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold ${s.step === currentStep ? 'bg-stone-800 text-white' :
-                s.step < currentStep ? 'bg-stone-600 text-white' :
-                  'bg-stone-200 text-stone-500'
-                }`}>
+            <div className={`flex flex-col items-center ${
+              s.step === currentStep ? 'text-foreground' :
+              s.step < currentStep ? 'text-primary' :
+              'text-muted-foreground'
+            }`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold ${
+                s.step === currentStep ? 'bg-primary text-primary-foreground' :
+                s.step < currentStep ? 'bg-primary/70 text-primary-foreground' :
+                'bg-muted text-muted-foreground'
+              }`}>
                 {s.step < currentStep ? <Check className="w-4 h-4" /> : s.step}
               </div>
             </div>
             {index < steps.length - 1 && (
-              <div className={`w-8 h-0.5 mx-2 ${s.step < currentStep ? 'bg-stone-600' : 'bg-stone-200'}`} />
+              <div className={`w-8 h-0.5 mx-2 ${s.step < currentStep ? 'bg-primary/70' : 'bg-border'}`} />
             )}
           </div>
         ))}
@@ -80,7 +85,7 @@ const StepProgress = ({ currentStep }: { currentStep: number }) => {
   );
 };
 
-// 3D Scene Components
+// 3D Scene — Blueprint Tech palette
 function Scene3D() {
   const meshRef = useRef<THREE.Mesh>(null);
 
@@ -96,20 +101,20 @@ function Scene3D() {
       <directionalLight position={[10, 10, 5]} intensity={1} castShadow />
       <pointLight position={[-10, -10, -10]} intensity={0.5} />
 
-      {/* Ground Plane */}
+      {/* Ground Plane — soft blueprint bg */}
       <Plane
         args={[50, 50]}
         rotation={[-Math.PI / 2, 0, 0]}
         position={[0, -0.5, 0]}
         receiveShadow
       >
-        <meshStandardMaterial color="#e7e5e4" />
+        <meshStandardMaterial color="#D4E8F5" />
       </Plane>
 
-      {/* Grid Helper */}
-      <primitive object={new THREE.GridHelper(50, 50, 0xa8a29e, 0xd6d3d1)} position={[0, -0.49, 0]} />
+      {/* Grid Helper — blueprint blue tones */}
+      <primitive object={new THREE.GridHelper(50, 50, 0x1F77B4, 0xC8D8F0)} position={[0, -0.49, 0]} />
 
-      {/* Sample House Base */}
+      {/* House Base — deep navy */}
       <DreiBox
         ref={meshRef}
         args={[4, 0.2, 4]}
@@ -117,23 +122,22 @@ function Scene3D() {
         castShadow
         receiveShadow
       >
-        <meshStandardMaterial color="#78716c" />
+        <meshStandardMaterial color="#0B3C5D" />
       </DreiBox>
 
-      {/* Sample Walls */}
+      {/* Walls — soft bg */}
       <DreiBox args={[3.8, 3, 3.8]} position={[0, 1.7, 0]} castShadow>
-        <meshStandardMaterial color="#f5f5f4" />
+        <meshStandardMaterial color="#E6F2FA" />
       </DreiBox>
 
-      {/* Sample Roof */}
+      {/* Roof — blueprint blue */}
       <DreiBox args={[4.2, 0.3, 4.2]} position={[0, 3.5, 0]} castShadow>
-        <meshStandardMaterial color="#44403c" />
+        <meshStandardMaterial color="#1F77B4" />
       </DreiBox>
     </>
   );
 }
 
-// Component Categories
 const componentCategories = {
   roof: {
     label: 'หลังคา',
@@ -216,8 +220,6 @@ export default function BuildPage() {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [totalPrice, setTotalPrice] = useState(1250000);
   const [saved, setSaved] = useState(false);
-
-  // Mobile states
   const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(false);
   const [isRightPanelOpen, setIsRightPanelOpen] = useState(false);
 
@@ -240,7 +242,7 @@ export default function BuildPage() {
   return (
     <AuroraBackground className="h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-white/80 dark:bg-stone-900/80 backdrop-blur-md border-b border-stone-200 dark:border-stone-800 h-14 flex items-center justify-between px-2 sm:px-4 shrink-0 z-50">
+      <header className="bg-card/85 dark:bg-background/85 backdrop-blur-md border-b border-border h-14 flex items-center justify-between px-2 sm:px-4 shrink-0 z-50">
         <div className="flex items-center gap-2 sm:gap-4">
           <Link href="/dashboard">
             <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -248,8 +250,8 @@ export default function BuildPage() {
             </Button>
           </Link>
           <Link href="/" className="flex items-center gap-2">
-            <Box className="w-6 h-6 text-stone-800" />
-            <span className="text-base font-semibold text-stone-800 hidden md:block">BluePrint3D</span>
+            <Box className="w-6 h-6 text-primary dark:text-accent" />
+            <span className="text-base font-semibold text-foreground hidden md:block">BluePrint3D</span>
           </Link>
           <Separator orientation="vertical" className="h-6 mx-1 sm:mx-2 hidden sm:block" />
           <div className="hidden sm:block">
@@ -293,7 +295,7 @@ export default function BuildPage() {
             {saved ? 'บันทึกแล้ว' : 'บันทึก'}
           </Button>
 
-          <Button size="sm" onClick={handleSubmit} className="bg-stone-800 hover:bg-stone-700 text-white h-8 px-2 sm:px-3">
+          <Button size="sm" onClick={handleSubmit} className="bg-primary hover:bg-primary/90 text-primary-foreground h-8 px-2 sm:px-3">
             <Send className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-2" />
             <span className="hidden sm:inline">ส่งแบบ</span>
           </Button>
@@ -316,25 +318,25 @@ export default function BuildPage() {
           )}
         </AnimatePresence>
 
-        {/* Left Sidebar - Components */}
+        {/* Left Sidebar — Components */}
         <aside
-          className={`bg-white border-r border-stone-200 flex flex-col shrink-0 absolute lg:static h-full z-50 transition-transform duration-300 ease-in-out w-72 lg:w-64 
+          className={`bg-card border-r border-border flex flex-col shrink-0 absolute lg:static h-full z-50 transition-transform duration-300 ease-in-out w-72 lg:w-64
             ${isLeftPanelOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
         >
-          <div className="p-3 border-b border-stone-200 flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-stone-900">ส่วนประกอบบ้าน</h2>
+          <div className="p-3 border-b border-border flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-foreground">ส่วนประกอบบ้าน</h2>
             <Button variant="ghost" size="icon" className="h-6 w-6 lg:hidden" onClick={() => setIsLeftPanelOpen(false)}>
               <X className="w-4 h-4" />
             </Button>
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
-            <TabsList className="flex flex-wrap h-auto bg-stone-50 p-1 gap-1 rounded-none">
+            <TabsList className="flex flex-wrap h-auto bg-muted/50 p-1 gap-1 rounded-none">
               {Object.entries(componentCategories).map(([key, category]) => (
                 <TabsTrigger
                   key={key}
                   value={key}
-                  className="flex-1 min-w-[60px] h-auto py-2 px-1 data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                  className="flex-1 min-w-[60px] h-auto py-2 px-1 data-[state=active]:bg-card data-[state=active]:shadow-sm"
                 >
                   <div className="flex flex-col items-center gap-1">
                     {category.icon}
@@ -355,18 +357,21 @@ export default function BuildPage() {
                         whileTap={{ scale: 0.98 }}
                       >
                         <Card
-                          className={`cursor-pointer border-stone-200 hover:border-stone-400 transition-colors ${selectedItems.includes(item.name) ? 'border-stone-800 bg-stone-50' : ''
-                            }`}
+                          className={`cursor-pointer transition-colors ${
+                            selectedItems.includes(item.name)
+                              ? 'border-primary bg-primary/5'
+                              : 'border-border hover:border-primary/50'
+                          }`}
                           onClick={() => addItem(item.name, item.price)}
                         >
                           <CardContent className="p-3">
                             <div className="flex items-center justify-between">
-                              <span className="text-sm font-medium text-stone-900">{item.name}</span>
+                              <span className="text-sm font-medium text-foreground">{item.name}</span>
                               {selectedItems.includes(item.name) && (
-                                <Check className="w-4 h-4 text-stone-800" />
+                                <Check className="w-4 h-4 text-primary dark:text-accent" />
                               )}
                             </div>
-                            <p className="text-xs text-stone-500 mt-1">
+                            <p className="text-xs text-muted-foreground mt-1">
                               ฿{item.price.toLocaleString()}
                             </p>
                           </CardContent>
@@ -380,10 +385,10 @@ export default function BuildPage() {
           </Tabs>
         </aside>
 
-        {/* Center - 3D Viewport */}
-        <main className="flex-1 relative bg-stone-200">
+        {/* Center — 3D Viewport */}
+        <main className="flex-1 relative bg-muted/30">
           {/* 3D Toolbar */}
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 bg-white rounded-lg shadow-lg px-3 py-2">
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 bg-card rounded-lg shadow-lg px-3 py-2 border border-border">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -447,7 +452,7 @@ export default function BuildPage() {
             shadows
             camera={{ position: [15, 15, 15], fov: 45 }}
             className="w-full h-full"
-            style={{ width: '100%', height: '100%', touchAction: 'none' }} // Prevent scrolling while interacting
+            style={{ width: '100%', height: '100%', touchAction: 'none' }}
           >
             <Suspense fallback={null}>
               <Scene3D />
@@ -468,16 +473,17 @@ export default function BuildPage() {
               <Home className="w-4 h-4 mr-2" />
               มุมมองบ้าน
             </Button>
-            <Button variant="ghost" size="sm" className="bg-white/80 shadow-lg">
+            <Button variant="ghost" size="sm" className="bg-card/80 shadow-lg border border-border">
               <Maximize className="w-4 h-4 mr-2" />
               มุมมองภายใน
             </Button>
           </div>
+
           {/* Mobile Floating Action Buttons */}
           <div className="absolute bottom-20 left-4 z-10 lg:hidden flex flex-col gap-2">
             <Button
               size="icon"
-              className="h-12 w-12 rounded-full shadow-xl bg-stone-800 text-white"
+              className="h-12 w-12 rounded-full shadow-xl bg-primary text-primary-foreground"
               onClick={() => setIsLeftPanelOpen(true)}
             >
               <Menu className="w-5 h-5" />
@@ -487,13 +493,12 @@ export default function BuildPage() {
           <div className="absolute bottom-20 right-4 z-10 lg:hidden flex flex-col gap-2">
             <Button
               size="icon"
-              className="h-12 w-12 rounded-full shadow-xl bg-white text-stone-800 border-2 border-stone-200"
+              className="h-12 w-12 rounded-full shadow-xl bg-card text-foreground border-2 border-border"
               onClick={() => setIsRightPanelOpen(true)}
             >
               <Settings2 className="w-5 h-5" />
             </Button>
           </div>
-
         </main>
 
         {/* Mobile Overlay for Right Panel */}
@@ -509,13 +514,13 @@ export default function BuildPage() {
           )}
         </AnimatePresence>
 
-        {/* Right Sidebar - Properties */}
+        {/* Right Sidebar — Properties */}
         <aside
-          className={`bg-white border-l border-stone-200 flex flex-col shrink-0 absolute right-0 lg:static h-full z-50 transition-transform duration-300 ease-in-out w-80 lg:w-72 
+          className={`bg-card border-l border-border flex flex-col shrink-0 absolute right-0 lg:static h-full z-50 transition-transform duration-300 ease-in-out w-80 lg:w-72
             ${isRightPanelOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'}`}
         >
           {/* Price Summary */}
-          <div className="p-4 border-b border-stone-200 bg-stone-50 relative">
+          <div className="p-4 border-b border-border bg-primary/5 relative">
             <Button
               variant="ghost"
               size="icon"
@@ -525,26 +530,26 @@ export default function BuildPage() {
               <X className="w-4 h-4" />
             </Button>
             <div className="flex items-center gap-2 mb-2 pr-6">
-              <DollarSign className="w-5 h-5 text-stone-600" />
-              <h3 className="font-semibold text-stone-900">ราคาประเมิน</h3>
+              <DollarSign className="w-5 h-5 text-primary dark:text-accent" />
+              <h3 className="font-semibold text-foreground">ราคาประเมิน</h3>
             </div>
-            <p className="text-3xl font-bold text-stone-900">฿{totalPrice.toLocaleString()}</p>
-            <p className="text-xs text-stone-500 mt-1">*ราคาโดยประมาณ อาจมีการเปลี่ยนแปลง</p>
+            <p className="text-3xl font-bold text-foreground">฿{totalPrice.toLocaleString()}</p>
+            <p className="text-xs text-muted-foreground mt-1">*ราคาโดยประมาณ อาจมีการเปลี่ยนแปลง</p>
           </div>
 
           {/* Selected Items */}
-          <div className="p-3 border-b border-stone-200">
-            <h3 className="text-sm font-semibold text-stone-900 mb-3">รายการที่เลือก</h3>
+          <div className="p-3 border-b border-border">
+            <h3 className="text-sm font-semibold text-foreground mb-3">รายการที่เลือก</h3>
             <ScrollArea className="h-40">
               <div className="space-y-2">
                 {selectedItems.length === 0 ? (
-                  <p className="text-sm text-stone-500 text-center py-4">
+                  <p className="text-sm text-muted-foreground text-center py-4">
                     ยังไม่มีรายการที่เลือก
                   </p>
                 ) : (
                   selectedItems.map((item, index) => (
-                    <div key={index} className="flex items-center justify-between p-2 bg-stone-50 rounded-lg">
-                      <span className="text-sm text-stone-700">{item}</span>
+                    <div key={index} className="flex items-center justify-between p-2 bg-muted/50 rounded-lg">
+                      <span className="text-sm text-foreground">{item}</span>
                       <Button
                         variant="ghost"
                         size="icon"
@@ -553,7 +558,7 @@ export default function BuildPage() {
                           setSelectedItems(selectedItems.filter((_, i) => i !== index));
                         }}
                       >
-                        <Trash2 className="w-3 h-3 text-red-500" />
+                        <Trash2 className="w-3 h-3 text-destructive" />
                       </Button>
                     </div>
                   ))
@@ -564,11 +569,11 @@ export default function BuildPage() {
 
           {/* Properties Panel */}
           <div className="flex-1 p-3">
-            <h3 className="text-sm font-semibold text-stone-900 mb-3">คุณสมบัติ</h3>
+            <h3 className="text-sm font-semibold text-foreground mb-3">คุณสมบัติ</h3>
             <div className="space-y-3">
               <div>
-                <label className="text-xs text-stone-500 mb-1 block">วัสดุ</label>
-                <select className="w-full text-sm border border-stone-300 rounded-lg px-3 py-2 bg-white">
+                <label className="text-xs text-muted-foreground mb-1 block">วัสดุ</label>
+                <select className="w-full text-sm border border-border rounded-lg px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring">
                   <option>เลือกวัสดุ...</option>
                   <option>ปูนซีเมนต์</option>
                   <option>ไม้เนื้อแข็ง</option>
@@ -576,24 +581,24 @@ export default function BuildPage() {
                 </select>
               </div>
               <div>
-                <label className="text-xs text-stone-500 mb-1 block">สี</label>
+                <label className="text-xs text-muted-foreground mb-1 block">สี</label>
                 <div className="flex gap-2">
-                  {['#f5f5f4', '#e7e5e4', '#d6d3d1', '#a8a29e', '#78716c', '#44403c'].map((color) => (
+                  {['#E6F2FA', '#C8D8F0', '#1F77B4', '#0B3C5D', '#00AEEF', '#0F172A'].map((color) => (
                     <button
                       key={color}
-                      className="w-8 h-8 rounded-lg border-2 border-white shadow-sm hover:scale-110 transition-transform"
+                      className="w-8 h-8 rounded-lg border-2 border-border shadow-sm hover:scale-110 transition-transform"
                       style={{ backgroundColor: color }}
                     />
                   ))}
                 </div>
               </div>
               <div>
-                <label className="text-xs text-stone-500 mb-1 block">ขนาด</label>
+                <label className="text-xs text-muted-foreground mb-1 block">ขนาด</label>
                 <div className="flex items-center gap-2">
                   <Button variant="outline" size="icon" className="h-8 w-8">
                     <Minimize className="w-4 h-4" />
                   </Button>
-                  <span className="text-sm text-stone-700 flex-1 text-center">100%</span>
+                  <span className="text-sm text-foreground flex-1 text-center">100%</span>
                   <Button variant="outline" size="icon" className="h-8 w-8">
                     <Maximize className="w-4 h-4" />
                   </Button>
@@ -603,7 +608,7 @@ export default function BuildPage() {
           </div>
 
           {/* Actions */}
-          <div className="p-4 border-t border-stone-200 space-y-2">
+          <div className="p-4 border-t border-border space-y-2">
             <Button
               variant="outline"
               className="w-full"
@@ -613,7 +618,7 @@ export default function BuildPage() {
               ย้อนกลับ
             </Button>
             <Button
-              className="w-full bg-stone-800 hover:bg-stone-700 text-white"
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
               onClick={handleSubmit}
             >
               ถัดไป

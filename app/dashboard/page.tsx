@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,12 +11,12 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { 
-  Box, 
-  Home, 
-  Settings, 
-  LogOut, 
-  Plus, 
+import {
+  Box,
+  Home,
+  Settings,
+  LogOut,
+  Plus,
   MoreVertical,
   MapPin,
   Clock,
@@ -29,7 +28,6 @@ import {
   X
 } from 'lucide-react';
 
-// Mock data for projects
 const mockProjects = [
   {
     id: 'PRJ-001',
@@ -63,11 +61,11 @@ const mockProjects = [
 const getStatusBadge = (status: string) => {
   switch (status) {
     case 'in_progress':
-      return <Badge variant="outline" className="border-amber-200 text-amber-700 bg-amber-50"><Clock className="w-3 h-3 mr-1" /> กำลังดำเนินการ</Badge>;
+      return <Badge variant="outline" className="border-amber-200 text-amber-700 bg-amber-50 dark:border-amber-800 dark:text-amber-400 dark:bg-amber-950/40"><Clock className="w-3 h-3 mr-1" /> กำลังดำเนินการ</Badge>;
     case 'submitted':
-      return <Badge variant="outline" className="border-blue-200 text-blue-700 bg-blue-50"><AlertCircle className="w-3 h-3 mr-1" /> รอตรวจสอบ</Badge>;
+      return <Badge variant="outline" className="border-bp-blue/40 text-bp-blue bg-bp-bg dark:border-accent/40 dark:text-accent dark:bg-accent/10"><AlertCircle className="w-3 h-3 mr-1" /> รอตรวจสอบ</Badge>;
     case 'completed':
-      return <Badge variant="outline" className="border-green-200 text-green-700 bg-green-50"><CheckCircle className="w-3 h-3 mr-1" /> เสร็จสิ้น</Badge>;
+      return <Badge variant="outline" className="border-green-200 text-green-700 bg-green-50 dark:border-green-800 dark:text-green-400 dark:bg-green-950/40"><CheckCircle className="w-3 h-3 mr-1" /> เสร็จสิ้น</Badge>;
     default:
       return <Badge variant="outline">{status}</Badge>;
   }
@@ -83,30 +81,25 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 flex">
+    <div className="min-h-screen bg-background flex">
       {/* Mobile Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 z-40 md:hidden"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-        )}
-      </AnimatePresence>
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
 
       {/* Sidebar */}
-      <aside className={`bg-white border-r border-stone-200 fixed h-full z-50 w-64 flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`bg-card border-r border-border fixed h-full z-50 w-64 flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="p-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <Box className="w-8 h-8 text-stone-800" />
-            <span className="text-xl font-semibold text-stone-800">BluePrint3D</span>
+            <Box className="w-8 h-8 text-primary dark:text-accent" />
+            <span className="text-xl font-semibold text-foreground">BluePrint3D</span>
           </Link>
-          <Button 
-            variant="ghost" 
-            size="icon" 
+          <Button
+            variant="ghost"
+            size="icon"
             className="md:hidden"
             onClick={() => setIsMobileMenuOpen(false)}
           >
@@ -117,8 +110,8 @@ export default function DashboardPage() {
         <ScrollArea className="flex-1 px-4">
           <nav className="space-y-1">
             <Link href="/dashboard">
-              <Button 
-                variant={activeTab === 'projects' ? 'secondary' : 'ghost'} 
+              <Button
+                variant={activeTab === 'projects' ? 'secondary' : 'ghost'}
                 className="w-full justify-start gap-3"
               >
                 <Home className="w-5 h-5" />
@@ -126,8 +119,8 @@ export default function DashboardPage() {
               </Button>
             </Link>
             <Link href="/settings">
-              <Button 
-                variant={activeTab === 'settings' ? 'secondary' : 'ghost'} 
+              <Button
+                variant={activeTab === 'settings' ? 'secondary' : 'ghost'}
                 className="w-full justify-start gap-3"
               >
                 <Settings className="w-5 h-5" />
@@ -137,19 +130,19 @@ export default function DashboardPage() {
           </nav>
         </ScrollArea>
 
-        <div className="p-4 border-t border-stone-200">
+        <div className="p-4 border-t border-border">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="w-full justify-start gap-3 h-auto py-3">
                 <Avatar className="w-8 h-8">
                   <AvatarImage src="/avatar.jpg" />
-                  <AvatarFallback className="bg-stone-200 text-stone-700">JD</AvatarFallback>
+                  <AvatarFallback className="bg-muted text-muted-foreground">JD</AvatarFallback>
                 </Avatar>
                 <div className="flex-1 text-left">
-                  <p className="text-sm font-medium text-stone-900">John Doe</p>
-                  <p className="text-xs text-stone-500">john@example.com</p>
+                  <p className="text-sm font-medium text-foreground">John Doe</p>
+                  <p className="text-xs text-muted-foreground">john@example.com</p>
                 </div>
-                <MoreVertical className="w-4 h-4 text-stone-400" />
+                <MoreVertical className="w-4 h-4 text-muted-foreground" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
@@ -173,24 +166,24 @@ export default function DashboardPage() {
       {/* Main Content */}
       <main className="flex-1 w-full md:ml-64 flex flex-col min-h-screen">
         {/* Header */}
-        <header className="bg-white border-b border-stone-200 sticky top-0 z-30">
+        <header className="bg-card border-b border-border sticky top-0 z-30">
           <div className="flex items-center justify-between px-4 sm:px-8 py-4">
             <div className="flex items-center gap-3">
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <Button
+                variant="ghost"
+                size="icon"
                 className="md:hidden -ml-2"
                 onClick={() => setIsMobileMenuOpen(true)}
               >
-                <Menu className="w-6 h-6 text-stone-800" />
+                <Menu className="w-6 h-6 text-foreground" />
               </Button>
               <div>
-                <h1 className="text-xl sm:text-2xl font-bold text-stone-900">แดชบอร์ด</h1>
-                <p className="text-xs sm:text-sm text-stone-600 hidden sm:block">จัดการโปรเจกต์ออกแบบบ้าน 3D ของคุณ</p>
+                <h1 className="text-xl sm:text-2xl font-bold text-foreground">แดชบอร์ด</h1>
+                <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">จัดการโปรเจกต์ออกแบบบ้าน 3D ของคุณ</p>
               </div>
             </div>
             <Link href="/project/location">
-              <Button className="bg-stone-800 hover:bg-stone-700 text-white gap-2 h-9 sm:h-10 px-3 sm:px-4">
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 h-9 sm:h-10 px-3 sm:px-4">
                 <Plus className="w-4 h-4" />
                 <span className="hidden sm:inline">สร้างโปรเจกต์ใหม่</span>
                 <span className="sm:hidden">สร้างใหม่</span>
@@ -203,54 +196,54 @@ export default function DashboardPage() {
         <div className="p-4 sm:p-8 flex-1">
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            <Card className="border-stone-200">
+            <Card className="border-border">
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-stone-600">โปรเจกต์ทั้งหมด</p>
-                    <p className="text-2xl font-bold text-stone-900">12</p>
+                    <p className="text-sm text-muted-foreground">โปรเจกต์ทั้งหมด</p>
+                    <p className="text-2xl font-bold text-foreground">12</p>
                   </div>
-                  <div className="w-10 h-10 bg-stone-100 rounded-lg flex items-center justify-center">
-                    <Home className="w-5 h-5 text-stone-600" />
+                  <div className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center">
+                    <Home className="w-5 h-5 text-primary dark:text-accent" />
                   </div>
                 </div>
               </CardContent>
             </Card>
-            <Card className="border-stone-200">
+            <Card className="border-border">
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-stone-600">กำลังดำเนินการ</p>
-                    <p className="text-2xl font-bold text-amber-700">3</p>
+                    <p className="text-sm text-muted-foreground">กำลังดำเนินการ</p>
+                    <p className="text-2xl font-bold text-amber-600 dark:text-amber-400">3</p>
                   </div>
-                  <div className="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center">
-                    <Clock className="w-5 h-5 text-amber-600" />
+                  <div className="w-10 h-10 bg-amber-50 dark:bg-amber-950/40 rounded-lg flex items-center justify-center">
+                    <Clock className="w-5 h-5 text-amber-600 dark:text-amber-400" />
                   </div>
                 </div>
               </CardContent>
             </Card>
-            <Card className="border-stone-200">
+            <Card className="border-border">
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-stone-600">รอตรวจสอบ</p>
-                    <p className="text-2xl font-bold text-blue-700">2</p>
+                    <p className="text-sm text-muted-foreground">รอตรวจสอบ</p>
+                    <p className="text-2xl font-bold text-bp-blue dark:text-accent">2</p>
                   </div>
-                  <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
-                    <AlertCircle className="w-5 h-5 text-blue-600" />
+                  <div className="w-10 h-10 bg-bp-bg dark:bg-accent/10 rounded-lg flex items-center justify-center">
+                    <AlertCircle className="w-5 h-5 text-bp-blue dark:text-accent" />
                   </div>
                 </div>
               </CardContent>
             </Card>
-            <Card className="border-stone-200">
+            <Card className="border-border">
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-stone-600">เสร็จสิ้น</p>
-                    <p className="text-2xl font-bold text-green-700">7</p>
+                    <p className="text-sm text-muted-foreground">เสร็จสิ้น</p>
+                    <p className="text-2xl font-bold text-green-700 dark:text-green-400">7</p>
                   </div>
-                  <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center">
-                    <CheckCircle className="w-5 h-5 text-green-600" />
+                  <div className="w-10 h-10 bg-green-50 dark:bg-green-950/40 rounded-lg flex items-center justify-center">
+                    <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
                   </div>
                 </div>
               </CardContent>
@@ -260,71 +253,64 @@ export default function DashboardPage() {
           {/* Projects Grid */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-stone-900">โปรเจกต์ล่าสุด</h2>
-              <Button variant="ghost" size="sm" className="text-stone-600">
+              <h2 className="text-lg font-semibold text-foreground">โปรเจกต์ล่าสุด</h2>
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
                 ดูทั้งหมด
                 <ChevronRight className="w-4 h-4 ml-1" />
               </Button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {mockProjects.map((project, index) => (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Card className="border-stone-200 hover:shadow-lg transition-shadow cursor-pointer group">
-                    <CardHeader className="pb-4">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <CardTitle className="text-lg text-stone-900 group-hover:text-stone-700 transition-colors">
-                            {project.name}
-                          </CardTitle>
-                          <CardDescription className="flex items-center gap-1 mt-1">
-                            <MapPin className="w-3 h-3" />
-                            {project.location}
-                          </CardDescription>
-                        </div>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                            <Button variant="ghost" size="icon" className="h-8 w-8">
-                              <MoreVertical className="w-4 h-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem>แก้ไข</DropdownMenuItem>
-                            <DropdownMenuItem>คัดลอก</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className="text-red-600">ลบ</DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
+              {mockProjects.map((project) => (
+                <Card key={project.id} className="border-border hover:shadow-lg transition-shadow cursor-pointer group">
+                  <CardHeader className="pb-4">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <CardTitle className="text-lg text-foreground group-hover:text-primary dark:group-hover:text-accent transition-colors">
+                          {project.name}
+                        </CardTitle>
+                        <CardDescription className="flex items-center gap-1 mt-1">
+                          <MapPin className="w-3 h-3" />
+                          {project.location}
+                        </CardDescription>
                       </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="relative rounded-lg aspect-video overflow-hidden mb-4 bg-stone-100">
-                        <Image
-                          src={project.thumbnail}
-                          alt={project.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        {getStatusBadge(project.status)}
-                        <span className="text-sm text-stone-600">{project.lastEdited}</span>
-                      </div>
-                    </CardContent>
-                    <Separator className="bg-stone-100" />
-                    <CardFooter className="pt-4">
-                      <div className="flex items-center justify-between w-full">
-                        <span className="text-sm text-stone-600">ราคาประเมิน</span>
-                        <span className="font-semibold text-stone-900">฿{project.price}</span>
-                      </div>
-                    </CardFooter>
-                  </Card>
-                </motion.div>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                          <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <MoreVertical className="w-4 h-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem>แก้ไข</DropdownMenuItem>
+                          <DropdownMenuItem>คัดลอก</DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem className="text-destructive">ลบ</DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="relative rounded-lg aspect-video overflow-hidden mb-4 bg-muted">
+                      <Image
+                        src={project.thumbnail}
+                        alt={project.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      {getStatusBadge(project.status)}
+                      <span className="text-sm text-muted-foreground">{project.lastEdited}</span>
+                    </div>
+                  </CardContent>
+                  <Separator />
+                  <CardFooter className="pt-4">
+                    <div className="flex items-center justify-between w-full">
+                      <span className="text-sm text-muted-foreground">ราคาประเมิน</span>
+                      <span className="font-semibold text-foreground">฿{project.price}</span>
+                    </div>
+                  </CardFooter>
+                </Card>
               ))}
             </div>
           </div>

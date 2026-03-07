@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -60,26 +60,21 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 flex">
+    <div className="min-h-screen bg-background flex">
       {/* Mobile Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 z-40 md:hidden"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-        )}
-      </AnimatePresence>
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
 
       {/* Sidebar */}
-      <aside className={`bg-white border-r border-stone-200 fixed h-full z-50 w-64 flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`bg-card border-r border-border fixed h-full z-50 w-64 flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="p-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <Box className="w-8 h-8 text-stone-800" />
-            <span className="text-xl font-semibold text-stone-800">BluePrint3D</span>
+            <Box className="w-8 h-8 text-primary dark:text-accent" />
+            <span className="text-xl font-semibold text-foreground">BluePrint3D</span>
           </Link>
           <Button
             variant="ghost"
@@ -94,19 +89,13 @@ export default function SettingsPage() {
         <ScrollArea className="flex-1 px-4">
           <nav className="space-y-1">
             <Link href="/dashboard">
-              <Button
-                variant="ghost"
-                className="w-full justify-start gap-3"
-              >
+              <Button variant="ghost" className="w-full justify-start gap-3">
                 <Home className="w-5 h-5" />
                 โปรเจกต์ของฉัน
               </Button>
             </Link>
             <Link href="/settings">
-              <Button
-                variant="secondary"
-                className="w-full justify-start gap-3"
-              >
+              <Button variant="secondary" className="w-full justify-start gap-3">
                 <Settings className="w-5 h-5" />
                 ตั้งค่าบัญชี
               </Button>
@@ -114,17 +103,17 @@ export default function SettingsPage() {
           </nav>
         </ScrollArea>
 
-        <div className="p-4 border-t border-stone-200">
+        <div className="p-4 border-t border-border">
           <Button variant="ghost" className="w-full justify-start gap-3 h-auto py-3">
             <Avatar className="w-8 h-8">
               <AvatarImage src="/images/avatar/user.jpg" />
-              <AvatarFallback className="bg-stone-200 text-stone-700">JD</AvatarFallback>
+              <AvatarFallback className="bg-muted text-muted-foreground">JD</AvatarFallback>
             </Avatar>
             <div className="flex-1 text-left">
-              <p className="text-sm font-medium text-stone-900">John Doe</p>
-              <p className="text-xs text-stone-500">john@example.com</p>
+              <p className="text-sm font-medium text-foreground">John Doe</p>
+              <p className="text-xs text-muted-foreground">john@example.com</p>
             </div>
-            <LogOut className="w-4 h-4 text-stone-400" />
+            <LogOut className="w-4 h-4 text-muted-foreground" />
           </Button>
         </div>
       </aside>
@@ -132,7 +121,7 @@ export default function SettingsPage() {
       {/* Main Content */}
       <main className="flex-1 w-full md:ml-64 flex flex-col min-h-screen">
         {/* Header */}
-        <header className="bg-white border-b border-stone-200 sticky top-0 z-30">
+        <header className="bg-card border-b border-border sticky top-0 z-30">
           <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-8 py-4">
             <Button
               variant="ghost"
@@ -140,7 +129,7 @@ export default function SettingsPage() {
               className="md:hidden -ml-2"
               onClick={() => setIsMobileMenuOpen(true)}
             >
-              <Menu className="w-6 h-6 text-stone-800" />
+              <Menu className="w-6 h-6 text-foreground" />
             </Button>
             <Link href="/dashboard" className="hidden sm:block">
               <Button variant="ghost" size="icon">
@@ -148,8 +137,8 @@ export default function SettingsPage() {
               </Button>
             </Link>
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-stone-900">ตั้งค่าบัญชี</h1>
-              <p className="text-xs sm:text-sm text-stone-600 hidden sm:block">จัดการข้อมูลส่วนตัวและการตั้งค่าความปลอดภัย</p>
+              <h1 className="text-xl sm:text-2xl font-bold text-foreground">ตั้งค่าบัญชี</h1>
+              <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">จัดการข้อมูลส่วนตัวและการตั้งค่าความปลอดภัย</p>
             </div>
           </div>
         </header>
@@ -163,20 +152,18 @@ export default function SettingsPage() {
             className="max-w-3xl"
           >
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="bg-stone-100 mb-6">
-                <TabsTrigger value="profile" className="data-[state=active]:bg-white">ข้อมูลส่วนตัว</TabsTrigger>
-                <TabsTrigger value="security" className="data-[state=active]:bg-white">ความปลอดภัย</TabsTrigger>
-                <TabsTrigger value="notifications" className="data-[state=active]:bg-white">การแจ้งเตือน</TabsTrigger>
+              <TabsList className="bg-muted mb-6">
+                <TabsTrigger value="profile" className="data-[state=active]:bg-card">ข้อมูลส่วนตัว</TabsTrigger>
+                <TabsTrigger value="security" className="data-[state=active]:bg-card">ความปลอดภัย</TabsTrigger>
+                <TabsTrigger value="notifications" className="data-[state=active]:bg-card">การแจ้งเตือน</TabsTrigger>
               </TabsList>
 
               {/* Profile Tab */}
               <TabsContent value="profile">
-                <Card className="border-stone-200">
+                <Card className="border-border">
                   <CardHeader>
                     <CardTitle>ข้อมูลส่วนตัว</CardTitle>
-                    <CardDescription>
-                      อัปเดตข้อมูลส่วนตัวและรูปโปรไฟล์ของคุณ
-                    </CardDescription>
+                    <CardDescription>อัปเดตข้อมูลส่วนตัวและรูปโปรไฟล์ของคุณ</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     {/* Avatar Section */}
@@ -184,88 +171,88 @@ export default function SettingsPage() {
                       <div className="relative">
                         <Avatar className="w-24 h-24">
                           <AvatarImage src="/images/avatar/user.jpg" />
-                          <AvatarFallback className="bg-stone-200 text-stone-700 text-2xl">JD</AvatarFallback>
+                          <AvatarFallback className="bg-muted text-muted-foreground text-2xl">JD</AvatarFallback>
                         </Avatar>
                         <Button
                           size="icon"
-                          className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700"
+                          className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground"
                         >
                           <Camera className="w-4 h-4" />
                         </Button>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-stone-900">รูปโปรไฟล์</h3>
-                        <p className="text-sm text-stone-600">รองรับไฟล์ JPG, PNG ขนาดไม่เกิน 2MB</p>
+                        <h3 className="font-semibold text-foreground">รูปโปรไฟล์</h3>
+                        <p className="text-sm text-muted-foreground">รองรับไฟล์ JPG, PNG ขนาดไม่เกิน 2MB</p>
                         <div className="flex gap-2 mt-2">
                           <Button variant="outline" size="sm">อัปโหลดรูปใหม่</Button>
-                          <Button variant="ghost" size="sm" className="text-red-600">ลบรูป</Button>
+                          <Button variant="ghost" size="sm" className="text-destructive">ลบรูป</Button>
                         </div>
                       </div>
                     </div>
 
-                    <Separator className="bg-stone-100" />
+                    <Separator />
 
                     {/* Form Fields */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="name" className="text-stone-700">ชื่อ-นามสกุล</Label>
+                        <Label htmlFor="name" className="text-foreground">ชื่อ-นามสกุล</Label>
                         <div className="relative">
-                          <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+                          <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                           <Input
                             id="name"
                             value={profileData.name}
                             onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
-                            className="pl-10 border-stone-300"
+                            className="pl-10 border-border"
                           />
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="email" className="text-stone-700">อีเมล</Label>
+                        <Label htmlFor="email" className="text-foreground">อีเมล</Label>
                         <div className="relative">
-                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                           <Input
                             id="email"
                             type="email"
                             value={profileData.email}
                             onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
-                            className="pl-10 border-stone-300"
+                            className="pl-10 border-border"
                           />
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="phone" className="text-stone-700">เบอร์โทรศัพท์</Label>
+                        <Label htmlFor="phone" className="text-foreground">เบอร์โทรศัพท์</Label>
                         <div className="relative">
-                          <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+                          <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                           <Input
                             id="phone"
                             value={profileData.phone}
                             onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
-                            className="pl-10 border-stone-300"
+                            className="pl-10 border-border"
                           />
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="address" className="text-stone-700">ที่อยู่</Label>
+                        <Label htmlFor="address" className="text-foreground">ที่อยู่</Label>
                         <div className="relative">
-                          <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+                          <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                           <Input
                             id="address"
                             value={profileData.address}
                             onChange={(e) => setProfileData({ ...profileData, address: e.target.value })}
-                            className="pl-10 border-stone-300"
+                            className="pl-10 border-border"
                           />
                         </div>
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="bio" className="text-stone-700">เกี่ยวกับฉัน</Label>
+                      <Label htmlFor="bio" className="text-foreground">เกี่ยวกับฉัน</Label>
                       <textarea
                         id="bio"
                         rows={3}
                         value={profileData.bio}
                         onChange={(e) => setProfileData({ ...profileData, bio: e.target.value })}
-                        className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 resize-none"
+                        className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none text-sm"
                       />
                     </div>
 
@@ -273,7 +260,7 @@ export default function SettingsPage() {
                       <Button variant="outline">ยกเลิก</Button>
                       <Button
                         onClick={handleSaveProfile}
-                        className={saved ? 'bg-green-600 hover:bg-green-700' : 'bg-stone-800 hover:bg-stone-700'}
+                        className={saved ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-primary hover:bg-primary/90 text-primary-foreground'}
                       >
                         <Save className="w-4 h-4 mr-2" />
                         {saved ? 'บันทึกแล้ว' : 'บันทึกข้อมูล'}
@@ -285,57 +272,55 @@ export default function SettingsPage() {
 
               {/* Security Tab */}
               <TabsContent value="security">
-                <Card className="border-stone-200">
+                <Card className="border-border">
                   <CardHeader>
                     <CardTitle>เปลี่ยนรหัสผ่าน</CardTitle>
-                    <CardDescription>
-                      อัปเดตรหัสผ่านเพื่อความปลอดภัยของบัญชี
-                    </CardDescription>
+                    <CardDescription>อัปเดตรหัสผ่านเพื่อความปลอดภัยของบัญชี</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="current-password" className="text-stone-700">รหัสผ่านปัจจุบัน</Label>
+                      <Label htmlFor="current-password" className="text-foreground">รหัสผ่านปัจจุบัน</Label>
                       <div className="relative">
                         <Input
                           id="current-password"
                           type={showPassword ? 'text' : 'password'}
                           value={passwordData.currentPassword}
                           onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
-                          className="border-stone-300 pr-10"
+                          className="border-border pr-10"
                           placeholder="••••••••"
                         />
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                         >
                           {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                         </button>
                       </div>
                     </div>
 
-                    <Separator className="bg-stone-100" />
+                    <Separator />
 
                     <div className="space-y-2">
-                      <Label htmlFor="new-password" className="text-stone-700">รหัสผ่านใหม่</Label>
+                      <Label htmlFor="new-password" className="text-foreground">รหัสผ่านใหม่</Label>
                       <Input
                         id="new-password"
                         type="password"
                         value={passwordData.newPassword}
                         onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
-                        className="border-stone-300"
+                        className="border-border"
                         placeholder="อย่างน้อย 8 ตัวอักษร"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="confirm-password" className="text-stone-700">ยืนยันรหัสผ่านใหม่</Label>
+                      <Label htmlFor="confirm-password" className="text-foreground">ยืนยันรหัสผ่านใหม่</Label>
                       <Input
                         id="confirm-password"
                         type="password"
                         value={passwordData.confirmPassword}
                         onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
-                        className="border-stone-300"
+                        className="border-border"
                         placeholder="••••••••"
                       />
                     </div>
@@ -344,7 +329,7 @@ export default function SettingsPage() {
                       <Button variant="outline">ยกเลิก</Button>
                       <Button
                         onClick={handleSavePassword}
-                        className={saved ? 'bg-green-600 hover:bg-green-700' : 'bg-stone-800 hover:bg-stone-700'}
+                        className={saved ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-primary hover:bg-primary/90 text-primary-foreground'}
                       >
                         <Save className="w-4 h-4 mr-2" />
                         {saved ? 'บันทึกแล้ว' : 'เปลี่ยนรหัสผ่าน'}
@@ -353,18 +338,16 @@ export default function SettingsPage() {
                   </CardContent>
                 </Card>
 
-                <Card className="border-stone-200 mt-6">
+                <Card className="border-border mt-6">
                   <CardHeader>
                     <CardTitle>การยืนยันตัวตนแบบสองขั้นตอน (2FA)</CardTitle>
-                    <CardDescription>
-                      เพิ่มความปลอดภัยด้วยการยืนยันตัวตนเพิ่มเติม
-                    </CardDescription>
+                    <CardDescription>เพิ่มความปลอดภัยด้วยการยืนยันตัวตนเพิ่มเติม</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="font-medium text-stone-900">ยืนยันด้วยเบอร์โทรศัพท์</h3>
-                        <p className="text-sm text-stone-600">รับรหัส OTP ทาง SMS เมื่อเข้าสู่ระบบ</p>
+                        <h3 className="font-medium text-foreground">ยืนยันด้วยเบอร์โทรศัพท์</h3>
+                        <p className="text-sm text-muted-foreground">รับรหัส OTP ทาง SMS เมื่อเข้าสู่ระบบ</p>
                       </div>
                       <Button variant="outline">เปิดใช้งาน</Button>
                     </div>
@@ -374,12 +357,10 @@ export default function SettingsPage() {
 
               {/* Notifications Tab */}
               <TabsContent value="notifications">
-                <Card className="border-stone-200">
+                <Card className="border-border">
                   <CardHeader>
                     <CardTitle>การแจ้งเตือน</CardTitle>
-                    <CardDescription>
-                      จัดการการแจ้งเตือนที่คุณต้องการรับ
-                    </CardDescription>
+                    <CardDescription>จัดการการแจ้งเตือนที่คุณต้องการรับ</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {[
@@ -388,14 +369,14 @@ export default function SettingsPage() {
                       { label: 'ข่าวสารและโปรโมชั่น', description: 'รับข้อมูลข่าวสารและส่วนลดพิเศษ', checked: false },
                       { label: 'อัปเดตระบบ', description: 'แจ้งเตือนเมื่อมีฟีเจอร์ใหม่ในระบบ', checked: true }
                     ].map((item, index) => (
-                      <div key={index} className="flex items-start justify-between py-3 border-b border-stone-100 last:border-0">
+                      <div key={index} className="flex items-start justify-between py-3 border-b border-border/50 last:border-0">
                         <div>
-                          <h3 className="font-medium text-stone-900">{item.label}</h3>
-                          <p className="text-sm text-stone-600">{item.description}</p>
+                          <h3 className="font-medium text-foreground">{item.label}</h3>
+                          <p className="text-sm text-muted-foreground">{item.description}</p>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
                           <input type="checkbox" defaultChecked={item.checked} className="sr-only peer" />
-                          <div className="w-11 h-6 bg-stone-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-stone-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-stone-800"></div>
+                          <div className="w-11 h-6 bg-muted peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-ring/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-border after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                         </label>
                       </div>
                     ))}

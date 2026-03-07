@@ -34,7 +34,7 @@ export const HeroHighlight = ({
       )}
       onMouseMove={handleMouseMove}
     >
-      <div className="absolute inset-0 bg-dot-thick-stone-300 dark:bg-dot-thick-stone-800  pointer-events-none" />
+      <div className="absolute inset-0 bg-dot-thick-bp-blue dark:bg-dot-thick-bp-navy pointer-events-none opacity-30" />
       <motion.div
         className="pointer-events-none bg-dot-thick-indigo-500 dark:bg-dot-thick-indigo-500   absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100"
         style={{
@@ -86,7 +86,7 @@ export const Highlight = ({
         display: "inline",
       }}
       className={cn(
-        `relative inline-block pb-1   px-1 rounded-lg bg-gradient-to-r from-stone-300 to-stone-400 dark:from-stone-700 dark:to-stone-600`,
+        "relative inline-block pb-1 px-1 rounded-lg bg-gradient-to-r from-bp-cyan/40 to-bp-blue/55 dark:from-bp-cyan/30 dark:to-bp-blue/45",
         className
       )}
     >

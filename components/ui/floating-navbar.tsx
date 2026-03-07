@@ -3,13 +3,8 @@
 /**
  * FloatingNav — scroll-aware navbar, no framer-motion.
  *
- * Previous version: useScroll + useMotionValueEvent + motion.div + AnimatePresence
- * from framer-motion. Those 4 imports alone pull in a significant chunk of the
- * framer-motion runtime.
- *
- * New version: useEffect + passive scroll listener + CSS `transition`.
- * Behaviour is identical (hides on scroll-down, shows on scroll-up).
- * Bundle contribution: ~200 bytes vs ~50KB.
+ * useEffect + passive scroll listener + CSS transition.
+ * Blueprint Tech theme: navy border, card/background backdrop.
  */
 
 import React, { useState, useEffect } from "react";
@@ -54,11 +49,10 @@ export const FloatingNav = ({
     <div
       className={cn(
         "flex max-w-fit fixed top-4 sm:top-10 inset-x-0 mx-auto z-[5000]",
-        "border border-stone-200 dark:border-stone-800/50 rounded-full",
-        "bg-white/80 dark:bg-stone-950/80 backdrop-blur-md",
-        "shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(25,28,33,0.08)]",
+        "border border-border rounded-full",
+        "bg-card/85 dark:bg-background/85 backdrop-blur-md",
+        "shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(11,60,93,0.08)]",
         "px-6 sm:px-8 py-2 items-center justify-center gap-4 sm:space-x-4",
-        // CSS transition replaces framer-motion AnimatePresence + motion.div
         "transition-all duration-200",
         visible
           ? "opacity-100 translate-y-0 pointer-events-auto"
@@ -70,7 +64,7 @@ export const FloatingNav = ({
         <Link
           key={idx}
           href={navItem.link}
-          className="relative dark:text-stone-300 items-center flex space-x-1 text-stone-600 dark:hover:text-stone-50 hover:text-stone-900"
+          className="relative text-muted-foreground items-center flex space-x-1 hover:text-foreground transition-colors"
         >
           <span className="block sm:hidden">{navItem.icon}</span>
           <span className="hidden sm:block text-sm font-medium">{navItem.name}</span>
